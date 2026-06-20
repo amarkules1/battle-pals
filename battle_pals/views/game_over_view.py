@@ -1,91 +1,87 @@
-import arcade
+import raylib as rl
 from battle_pals.constants import (
     COLOR_BG_DARK, COLOR_BG_PANEL, COLOR_BORDER, 
     COLOR_TEXT_PRIMARY, COLOR_TEXT_MUTED
 )
+from ai4animation import AI4Animation, Vector3
 
-class GameOverView(arcade.View):
+class GameOverView:
     def __init__(self, victory, player_pal, opponent_pal):
-        super().__init__()
         self.victory = victory
         self.player = player_pal
         self.opponent = opponent_pal
         self.btn_hovered = False
 
         # Button geometry
-        self.btn_width = 240
-        self.btn_height = 55
+        self.btn_w = 300
+        self.btn_h = 70
         self.btn_x = 0
         self.btn_y = 0
 
     def on_show_view(self):
-        arcade.set_background_color(COLOR_BG_DARK)
-        self.btn_x = self.window.width / 2
-        self.btn_y = self.window.height / 2 - 100
+        pass
+
+    def on_update(self, dt):
+        sw = rl.GetScreenWidth()
+        sh = rl.GetScreenHeight()
+        
+        self.btn_x = (sw - self.btn_w) / 2
+        self.btn_y = sh * 0.55
+
+        # Check mouse hover
+        mouse_pos = rl.GetMousePosition()
+        mx, my = mouse_pos.x, mouse_pos.y
+        self.btn_hovered = (self.btn_x <= mx <= self.btn_x + self.btn_w) and (self.btn_y <= my <= self.btn_y + self.btn_h)
+
+        # Handle mouse press
+        if rl.IsMouseButtonPressed(rl.MOUSE_BUTTON_LEFT) and self.btn_hovered:
+            from battle_pals.views.starter_view import StarterView
+            from battle_pals.game import BattlePalsGame
+            BattlePalsGame.get_instance().switch_to_view(StarterView())
 
     def on_draw(self):
-        self.clear()
+        # Draw background arena floor
+        # Dark forest green arena plane
+        rl.DrawPlane([0.0, 0.0, 0.0], [30.0, 30.0], (28, 36, 24, 255))
+
+    def on_gui(self):
+        sw = rl.GetScreenWidth()
+        sh = rl.GetScreenHeight()
 
         # Outcome title
         title = "VICTORY!" if self.victory else "DEFEAT..."
-        title_color = arcade.color.AQUAMARINE if self.victory else arcade.color.CORAL
+        title_color = (46, 204, 113, 255) if self.victory else (231, 76, 60, 255)
 
-        arcade.draw_text(
+        # Draw Title
+        AI4Animation.Draw.Text(
             title,
-            self.window.width / 2,
-            self.window.height - 150,
-            title_color,
-            font_size=42,
-            anchor_x="center",
-            bold=True
+            0.5, 0.22, 0.07, title_color, 0.5
         )
 
-        # Detailed logs/summary
+        # Summary text
         if self.victory:
             summary = f"Your {self.player.name} defeated the wild {self.opponent.name}!"
         else:
             summary = f"Your {self.player.name} fainted in battle against {self.opponent.name}."
 
-        arcade.draw_text(
+        AI4Animation.Draw.Text(
             summary,
-            self.window.width / 2,
-            self.window.height - 210,
-            COLOR_TEXT_PRIMARY,
-            font_size=16,
-            anchor_x="center"
+            0.5, 0.35, 0.022, COLOR_TEXT_PRIMARY, 0.5
         )
 
         # Drawing the "Play Again" button
-        bg_color = (45, 52, 68) if self.btn_hovered else COLOR_BG_PANEL
-        border_color = arcade.color.AQUAMARINE if self.btn_hovered else COLOR_BORDER
-        border_width = 3 if self.btn_hovered else 2
+        bg_color = (45, 52, 68, 255) if self.btn_hovered else COLOR_BG_PANEL
+        border_color = (46, 204, 113, 255) if self.btn_hovered else COLOR_BORDER
+        border_thickness = 4 if self.btn_hovered else 2
 
-        arcade.draw_lbwh_rectangle_filled(self.btn_x - self.btn_width / 2, self.btn_y - self.btn_height / 2, self.btn_width, self.btn_height, bg_color)
-        arcade.draw_lbwh_rectangle_outline(self.btn_x - self.btn_width / 2, self.btn_y - self.btn_height / 2, self.btn_width, self.btn_height, border_color, border_width)
+        rl.DrawRectangle(int(self.btn_x), int(self.btn_y), int(self.btn_w), int(self.btn_h), bg_color)
+        rl.DrawRectangleLinesEx([self.btn_x, self.btn_y, self.btn_w, self.btn_h], border_thickness, border_color)
 
-        arcade.draw_text(
+        btn_cx_norm = (self.btn_x + self.btn_w / 2) / sw
+        btn_cy_norm = (self.btn_y + self.btn_h / 2 - 12) / sh
+
+        AI4Animation.Draw.Text(
             "PLAY AGAIN",
-            self.btn_x,
-            self.btn_y,
-            COLOR_TEXT_PRIMARY,
-            font_size=16,
-            anchor_x="center",
-            anchor_y="center",
-            bold=True
+            btn_cx_norm, btn_cy_norm,
+            0.024, COLOR_TEXT_PRIMARY, 0.5
         )
-
-    def is_over_button(self, mx, my):
-        left = self.btn_x - self.btn_width / 2
-        right = self.btn_x + self.btn_width / 2
-        bottom = self.btn_y - self.btn_height / 2
-        top = self.btn_y + self.btn_height / 2
-        return left <= mx <= right and bottom <= my <= top
-
-    def on_mouse_motion(self, x, y, dx, dy):
-        self.btn_hovered = self.is_over_button(x, y)
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        if self.is_over_button(x, y):
-            # Return to starter view selection
-            from battle_pals.views.starter_view import StarterView
-            self.window.show_view(StarterView())

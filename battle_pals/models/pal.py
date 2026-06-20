@@ -1,8 +1,10 @@
 import random
+import math
 from battle_pals.models.move import MOVES
+from ai4animation.Math import Vector3
 
 class Pal:
-    def __init__(self, name, pal_type, level, hp, attack, defense, speed, moves_list):
+    def __init__(self, name, pal_type, level, hp, attack, defense, speed, moves_list, is_player=False):
         self.name = name
         self.type = pal_type  # "Fire", "Water", "Grass"
         self.level = level
@@ -11,6 +13,7 @@ class Pal:
         self.base_attack = attack
         self.base_defense = defense
         self.base_speed = speed
+        self.is_player = is_player
         
         # Moves
         self.moves = [MOVES[m] for m in moves_list if m in MOVES]
@@ -21,6 +24,24 @@ class Pal:
             "defense": 1.0,
             "speed": 1.0
         }
+
+        # Animation states
+        self.time = 0.0
+        self.base_position = Vector3.Create(-4.0, 1.5, -2.0) if is_player else Vector3.Create(4.0, 3.5, 2.0)
+        self.position = Vector3.Create(-4.0, 1.5, -2.0) if is_player else Vector3.Create(4.0, 3.5, 2.0)
+        
+        self.float_amp = 0.15
+        self.float_freq = 2.0
+        
+        self.shake_timer = 0.0
+        self.shake_intensity = 0.0
+        
+        self.attack_timer = 0.0
+        self.attack_duration = 0.5
+        
+        self.flash_timer = 0.0
+        self.faint_timer = 0.0
+        self.is_fainted = False
 
     @property
     def attack(self):
@@ -42,12 +63,67 @@ class Pal:
             "defense": 1.0,
             "speed": 1.0
         }
+        self.shake_timer = 0.0
+        self.flash_timer = 0.0
+        self.attack_timer = 0.0
+        self.faint_timer = 0.0
+        self.is_fainted = False
+        self.time = 0.0
+        self.position = Vector3.Create(-4.0, 1.5, -2.0) if self.is_player else Vector3.Create(4.0, 3.5, 2.0)
 
     def take_damage(self, amount):
         self.hp = max(0, self.hp - amount)
+        self.shake_timer = 0.4
+        self.shake_intensity = 0.3
+        self.flash_timer = 0.4
 
     def heal(self, amount):
         self.hp = min(self.max_hp, self.hp + amount)
+        self.flash_timer = 0.4  # Flashes white/green
+
+    def update_animation(self, dt):
+        if self.is_fainted:
+            return
+            
+        self.time += dt
+        
+        # 1. Floating animation
+        float_y = math.sin(self.time * self.float_freq) * self.float_amp
+        self.position = Vector3.Create(self.base_position[0], self.base_position[1] + float_y, self.base_position[2])
+        
+        # 2. Attack slide animation
+        if self.attack_timer > 0.0:
+            self.attack_timer -= dt
+            progress = (self.attack_duration - self.attack_timer) / self.attack_duration
+            slide_dist = math.sin(progress * math.pi) * 3.0
+            direction = 1.0 if self.is_player else -1.0
+            self.position = Vector3.Create(
+                self.position[0] + direction * slide_dist,
+                self.position[1],
+                self.position[2] + direction * slide_dist * 0.5
+            )
+            
+        # 3. Shake animation
+        if self.shake_timer > 0.0:
+            self.shake_timer -= dt
+            shake_x = math.sin(self.shake_timer * 40.0) * self.shake_intensity
+            self.position = Vector3.Create(self.position[0] + shake_x, self.position[1], self.position[2])
+            
+        # 4. Flashing timer
+        if self.flash_timer > 0.0:
+            self.flash_timer -= dt
+            
+        # 5. Fainting animation
+        if self.faint_timer > 0.0:
+            self.faint_timer += dt
+            # Spin and drop down
+            self.position = Vector3.Create(
+                self.base_position[0],
+                self.base_position[1] - min(2.0, self.faint_timer * 2.0),
+                self.base_position[2]
+            )
+            if self.faint_timer > 1.0:
+                self.is_fainted = True
 
     @staticmethod
     def get_effectiveness(move_type, target_type):
@@ -68,6 +144,9 @@ class Pal:
         Returns a list of outcome messages (combat log).
         """
         logs = [f"{self.name} used {move.name}!"]
+        
+        # Trigger attack animation
+        self.attack_timer = self.attack_duration
 
         # Check accuracy
         if random.random() > move.accuracy:
@@ -76,12 +155,8 @@ class Pal:
 
         # 1. Damage Category
         if move.category == "Physical" or move.category == "Special":
-            # Type effectiveness multiplier
             eff = self.get_effectiveness(move.type, target.type)
             
-            # Simple standard Pokemon damage formula:
-            # Damage = (((2 * Level / 5 + 2) * Power * A / D) / 50 + 2) * Modifier
-            # With randomized variance (85% to 100%)
             a_d_ratio = self.attack / max(1, target.defense)
             base_dmg = (((2 * self.level / 5 + 2) * move.power * a_d_ratio) / 50) + 2
             
@@ -119,8 +194,6 @@ class Pal:
                 stat = effect["stat"]
                 multiplier = effect["mult"]
                 
-                # Apply target or self based on move description / type
-                # For standard growl/tailwhip, it affects the target
                 if stat in target.stat_modifiers:
                     target.stat_modifiers[stat] = max(0.4, target.stat_modifiers[stat] * multiplier)
                     change_text = "fell" if multiplier < 1.0 else "rose"
@@ -129,8 +202,7 @@ class Pal:
         return logs
 
 # Starter Pal Presets
-def create_leaflet():
-    # Grass type - high HP / defense
+def create_leaflet(is_player=False):
     return Pal(
         name="Leaflet",
         pal_type="Grass",
@@ -139,11 +211,11 @@ def create_leaflet():
         attack=12,
         defense=14,
         speed=10,
-        moves_list=["Tackle", "Razor Leaf", "Synthesize"]
+        moves_list=["Tackle", "Razor Leaf", "Synthesize"],
+        is_player=is_player
     )
 
-def create_pyropup():
-    # Fire type - high attack / speed
+def create_pyropup(is_player=False):
     return Pal(
         name="Pyropup",
         pal_type="Fire",
@@ -152,11 +224,11 @@ def create_pyropup():
         attack=15,
         defense=10,
         speed=13,
-        moves_list=["Scratch", "Ember", "Growl"]
+        moves_list=["Scratch", "Ember", "Growl"],
+        is_player=is_player
     )
 
-def create_aquasplash():
-    # Water type - high HP / balanced stats
+def create_aquasplash(is_player=False):
     return Pal(
         name="Aquasplash",
         pal_type="Water",
@@ -165,7 +237,8 @@ def create_aquasplash():
         attack=13,
         defense=12,
         speed=11,
-        moves_list=["Tackle", "Water Gun", "Tail Whip"]
+        moves_list=["Tackle", "Water Gun", "Tail Whip"],
+        is_player=is_player
     )
 
 STARTERS = {
