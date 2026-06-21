@@ -199,83 +199,249 @@ class BattleView:
             return
             
         pos = pal.position
+        facing = 1.0 if pal.is_player else -1.0
         
-        # Determine color (flash red when taking damage, flash white when healing)
-        if pal.flash_timer > 0.0 and int(pal.flash_timer * 15.0) % 2 == 0:
-            color = rl.colors.RED
-        else:
-            if pal.type == "Fire":
-                color = COLOR_TYPE_FIRE
-            elif pal.type == "Water":
-                color = COLOR_TYPE_WATER
-            else:
-                color = COLOR_TYPE_GRASS
-                
         # Scale modifier based on fainting
         scale = 1.0
         if pal.faint_timer > 0.0:
             scale = max(0.01, 1.0 - pal.faint_timer)
             
-        body_radius = 1.25 * scale
-        
-        # 1. Draw central body sphere
-        AI4Animation.Draw.Sphere(pos, body_radius, 12, color)
-        
-        # Draw face features facing the center
-        facing = 1.0 if pal.is_player else -1.0
-        
-        # Eyes
-        eye_y = pos[1] + 0.3 * scale
-        eye_z = pos[2] - 0.9 * facing * scale
-        eye_x_l = pos[0] - 0.45 * scale
-        eye_x_r = pos[0] + 0.45 * scale
-        
-        AI4Animation.Draw.Sphere(Vector3.Create(eye_x_l, eye_y, eye_z), 0.15 * scale, 6, rl.colors.BLACK)
-        AI4Animation.Draw.Sphere(Vector3.Create(eye_x_r, eye_y, eye_z), 0.15 * scale, 6, rl.colors.BLACK)
-        
-        # Cheek details (blushing)
-        cheek_color = (255, 128, 128, 128) # transparent rose pink
-        AI4Animation.Draw.Sphere(Vector3.Create(pos[0] - 0.65 * scale, pos[1], eye_z + 0.1 * facing), 0.2 * scale, 6, cheek_color)
-        AI4Animation.Draw.Sphere(Vector3.Create(pos[0] + 0.65 * scale, pos[1], eye_z + 0.1 * facing), 0.2 * scale, 6, cheek_color)
+        # Determine color override (flash red when taking damage)
+        def get_color(base_c):
+            if pal.flash_timer > 0.0 and int(pal.flash_timer * 15.0) % 2 == 0:
+                return rl.colors.RED
+            return base_c
 
-        # Procedural visual detail decorations based on Type
+        # Define common colors
+        color_eye_bg = rl.colors.BLACK
+        color_eye_fg = rl.colors.WHITE
+        color_mouth = (231, 76, 60, 255) # Rose/red
+        color_cheek = (255, 128, 128, 128) # Translucent blush
+
+        # --- 3D Character Rendering ---
         if pal.type == "Grass":
-            leaf_color = (46, 204, 113, 255)
-            # Left Leaf Ear
+            color_body = get_color((115, 198, 80, 255))   # Pale green
+            color_accent = get_color((46, 204, 113, 255))  # Emerald green
+            color_belly = get_color((215, 235, 150, 255))   # Yellow green
+            
+            # 1. Body & Head
+            body_center = Vector3.Create(pos[0], pos[1] - 0.2 * scale, pos[2] + 0.1 * facing * scale)
+            head_center = Vector3.Create(pos[0], pos[1] + 0.7 * scale, pos[2] - 0.3 * facing * scale)
+            AI4Animation.Draw.Sphere(body_center, 1.0 * scale, 12, color_body)
+            AI4Animation.Draw.Sphere(head_center, 0.85 * scale, 12, color_body)
+            
+            # 2. Chest Belly Patch
+            belly_center = Vector3.Create(pos[0], pos[1] - 0.1 * scale, pos[2] - 0.7 * facing * scale)
+            AI4Animation.Draw.Sphere(belly_center, 0.5 * scale, 8, color_belly)
+            
+            # 3. Face
+            # Eyes
+            eye_y = head_center[1] + 0.15 * scale
+            eye_z = head_center[2] - 0.65 * facing * scale
+            eye_xl = head_center[0] - 0.3 * scale
+            eye_xr = head_center[0] + 0.3 * scale
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xl, eye_y, eye_z), 0.12 * scale, 6, get_color(color_eye_bg))
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xr, eye_y, eye_z), 0.12 * scale, 6, get_color(color_eye_bg))
+            # Eye Highlights
+            hl_z = eye_z - 0.08 * facing * scale
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xl + 0.04 * scale, eye_y + 0.04 * scale, hl_z), 0.04 * scale, 4, get_color(color_eye_fg))
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xr + 0.04 * scale, eye_y + 0.04 * scale, hl_z), 0.04 * scale, 4, get_color(color_eye_fg))
+            # Cheeks
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0] - 0.45 * scale, head_center[1] - 0.05 * scale, eye_z), 0.12 * scale, 6, get_color(color_cheek))
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0] + 0.45 * scale, head_center[1] - 0.05 * scale, eye_z), 0.12 * scale, 6, get_color(color_cheek))
+            # Mouth
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0], head_center[1] - 0.15 * scale, eye_z - 0.05 * facing * scale), 0.07 * scale, 6, get_color(color_mouth))
+
+            # 4. Leaf Ears (Decorations)
             AI4Animation.Draw.Cylinder(
-                Vector3.Create(pos[0] - 0.8 * scale, pos[1] + 0.8 * scale, pos[2]),
-                Vector3.Create(pos[0] - 1.5 * scale, pos[1] + 1.9 * scale, pos[2] - 0.5 * facing * scale),
-                0.22 * scale, 0.0, 8, leaf_color
+                Vector3.Create(head_center[0] - 0.5 * scale, head_center[1] + 0.3 * scale, head_center[2]),
+                Vector3.Create(head_center[0] - 1.2 * scale, head_center[1] + 1.2 * scale, head_center[2] - 0.3 * facing * scale),
+                0.18 * scale, 0.01 * scale, 8, color_accent
             )
-            # Right Leaf Ear
             AI4Animation.Draw.Cylinder(
-                Vector3.Create(pos[0] + 0.8 * scale, pos[1] + 0.8 * scale, pos[2]),
-                Vector3.Create(pos[0] + 1.5 * scale, pos[1] + 1.9 * scale, pos[2] - 0.5 * facing * scale),
-                0.22 * scale, 0.0, 8, leaf_color
+                Vector3.Create(head_center[0] + 0.5 * scale, head_center[1] + 0.3 * scale, head_center[2]),
+                Vector3.Create(head_center[0] + 1.2 * scale, head_center[1] + 1.2 * scale, head_center[2] - 0.3 * facing * scale),
+                0.18 * scale, 0.01 * scale, 8, color_accent
             )
             
+            # 5. Top Head Sprout
+            AI4Animation.Draw.Cylinder(
+                Vector3.Create(head_center[0], head_center[1] + 0.7 * scale, head_center[2]),
+                Vector3.Create(head_center[0], head_center[1] + 1.2 * scale, head_center[2] - 0.2 * facing * scale),
+                0.06 * scale, 0.04 * scale, 6, color_accent
+            )
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0], head_center[1] + 1.2 * scale, head_center[2] - 0.2 * facing * scale), 0.12 * scale, 6, get_color(rl.colors.YELLOW))
+
+            # 6. Stout Lizard Legs (4 limbs)
+            leg_offsets = [
+                (-0.4, -0.3, -0.4),
+                (0.4, -0.3, -0.4),
+                (-0.4, -0.3, 0.4),
+                (0.4, -0.3, 0.4)
+            ]
+            for ox, oy, oz in leg_offsets:
+                leg_start = Vector3.Create(body_center[0] + ox * scale, body_center[1] + oy * scale, body_center[2] + oz * facing * scale)
+                leg_end = Vector3.Create(body_center[0] + ox * scale, body_center[1] - 0.9 * scale, body_center[2] + oz * facing * scale)
+                AI4Animation.Draw.Cylinder(leg_start, leg_end, 0.16 * scale, 0.16 * scale, 6, color_body)
+                AI4Animation.Draw.Sphere(leg_end, 0.22 * scale, 6, color_accent) # feet
+
+            # 7. Leaf Tail
+            tail_base = Vector3.Create(body_center[0], body_center[1] - 0.3 * scale, body_center[2] + 0.8 * facing * scale)
+            tail_tip = Vector3.Create(body_center[0], body_center[1] + 0.5 * scale, body_center[2] + 1.7 * facing * scale)
+            AI4Animation.Draw.Cylinder(tail_base, tail_tip, 0.15 * scale, 0.05 * scale, 6, color_body)
+            # Decorative tail leaf spheres
+            AI4Animation.Draw.Sphere(Vector3.Create(tail_tip[0], tail_tip[1], tail_tip[2]), 0.3 * scale, 6, color_accent)
+            AI4Animation.Draw.Sphere(Vector3.Create(tail_base[0] * 0.4 + tail_tip[0] * 0.6, tail_base[1] * 0.4 + tail_tip[1] * 0.6, tail_base[2] * 0.4 + tail_tip[2] * 0.6), 0.25 * scale, 6, color_accent)
+
         elif pal.type == "Fire":
-            fire_color = (241, 196, 15, 255)
-            # Flame Ears/Spikes
-            AI4Animation.Draw.Sphere(Vector3.Create(pos[0] - 0.8 * scale, pos[1] + 1.0 * scale, pos[2]), 0.45 * scale, 8, fire_color)
-            AI4Animation.Draw.Sphere(Vector3.Create(pos[0] + 0.8 * scale, pos[1] + 1.0 * scale, pos[2]), 0.45 * scale, 8, fire_color)
-            # Flame tail
-            AI4Animation.Draw.Cylinder(
-                Vector3.Create(pos[0], pos[1] - 0.4 * scale, pos[2] + 1.0 * facing * scale),
-                Vector3.Create(pos[0] - 0.3 * scale, pos[1] + 0.8 * scale, pos[2] + 2.0 * facing * scale),
-                0.25 * scale, 0.05 * scale, 6, fire_color
-            )
+            color_body = get_color((243, 156, 18, 255))   # Bright Orange
+            color_accent = get_color((231, 76, 60, 255))  # Red
+            color_belly = get_color((241, 196, 15, 255))   # Yellow
             
-        elif pal.type == "Water":
-            fin_color = (52, 152, 219, 255)
-            # Flippers/Fins
-            AI4Animation.Draw.Sphere(Vector3.Create(pos[0] - 1.25 * scale, pos[1] - 0.2 * scale, pos[2]), 0.35 * scale, 8, fin_color)
-            AI4Animation.Draw.Sphere(Vector3.Create(pos[0] + 1.25 * scale, pos[1] - 0.2 * scale, pos[2]), 0.35 * scale, 8, fin_color)
-            # Dorsal fin
+            # 1. Body & Head
+            body_center = Vector3.Create(pos[0], pos[1] - 0.2 * scale, pos[2] + 0.1 * facing * scale)
+            head_center = Vector3.Create(pos[0], pos[1] + 0.7 * scale, pos[2] - 0.3 * facing * scale)
+            AI4Animation.Draw.Sphere(body_center, 0.95 * scale, 12, color_body)
+            AI4Animation.Draw.Sphere(head_center, 0.85 * scale, 12, color_body)
+            
+            # 2. Chest Flame Bib
+            belly_center = Vector3.Create(pos[0], pos[1] - 0.15 * scale, pos[2] - 0.65 * facing * scale)
+            AI4Animation.Draw.Sphere(belly_center, 0.45 * scale, 8, color_belly)
+            
+            # 3. Snout & Nose
+            snout_center = Vector3.Create(head_center[0], head_center[1] - 0.05 * scale, head_center[2] - 0.7 * facing * scale)
+            AI4Animation.Draw.Sphere(snout_center, 0.22 * scale, 6, color_body)
+            nose_center = Vector3.Create(snout_center[0], snout_center[1] + 0.08 * scale, snout_center[2] - 0.15 * facing * scale)
+            AI4Animation.Draw.Sphere(nose_center, 0.06 * scale, 4, get_color(color_eye_bg))
+
+            # 4. Face
+            # Eyes
+            eye_y = head_center[1] + 0.15 * scale
+            eye_z = head_center[2] - 0.65 * facing * scale
+            eye_xl = head_center[0] - 0.3 * scale
+            eye_xr = head_center[0] + 0.3 * scale
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xl, eye_y, eye_z), 0.12 * scale, 6, get_color(color_eye_bg))
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xr, eye_y, eye_z), 0.12 * scale, 6, get_color(color_eye_bg))
+            # Eye Highlights
+            hl_z = eye_z - 0.08 * facing * scale
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xl + 0.04 * scale, eye_y + 0.04 * scale, hl_z), 0.04 * scale, 4, get_color(color_eye_fg))
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xr + 0.04 * scale, eye_y + 0.04 * scale, hl_z), 0.04 * scale, 4, get_color(color_eye_fg))
+            # Cheeks
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0] - 0.45 * scale, head_center[1] - 0.05 * scale, eye_z), 0.12 * scale, 6, get_color(color_cheek))
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0] + 0.45 * scale, head_center[1] - 0.05 * scale, eye_z), 0.12 * scale, 6, get_color(color_cheek))
+
+            # 5. Floppy/Pointy Puppy Ears
             AI4Animation.Draw.Cylinder(
-                Vector3.Create(pos[0], pos[1] + 0.8 * scale, pos[2] + 0.3 * facing * scale),
-                Vector3.Create(pos[0], pos[1] + 1.8 * scale, pos[2] + 1.0 * facing * scale),
-                0.2 * scale, 0.0, 6, fin_color
+                Vector3.Create(head_center[0] - 0.55 * scale, head_center[1] + 0.4 * scale, head_center[2]),
+                Vector3.Create(head_center[0] - 0.8 * scale, head_center[1] + 1.1 * scale, head_center[2] - 0.1 * facing * scale),
+                0.16 * scale, 0.04 * scale, 8, color_accent
+            )
+            AI4Animation.Draw.Cylinder(
+                Vector3.Create(head_center[0] + 0.55 * scale, head_center[1] + 0.4 * scale, head_center[2]),
+                Vector3.Create(head_center[0] + 0.8 * scale, head_center[1] + 1.1 * scale, head_center[2] - 0.1 * facing * scale),
+                0.16 * scale, 0.04 * scale, 8, color_accent
+            )
+
+            # 6. Dog Legs
+            leg_offsets = [
+                (-0.35, -0.3, -0.4),
+                (0.35, -0.3, -0.4),
+                (-0.35, -0.3, 0.4),
+                (0.35, -0.3, 0.4)
+            ]
+            for ox, oy, oz in leg_offsets:
+                leg_start = Vector3.Create(body_center[0] + ox * scale, body_center[1] + oy * scale, body_center[2] + oz * facing * scale)
+                leg_end = Vector3.Create(body_center[0] + ox * scale, body_center[1] - 0.9 * scale, body_center[2] + oz * facing * scale)
+                AI4Animation.Draw.Cylinder(leg_start, leg_end, 0.14 * scale, 0.14 * scale, 6, color_body)
+                AI4Animation.Draw.Sphere(leg_end, 0.2 * scale, 6, color_belly) # yellow paws
+
+            # 7. Flaming Tail
+            tail_base = Vector3.Create(body_center[0], body_center[1] - 0.3 * scale, body_center[2] + 0.7 * facing * scale)
+            tail_mid = Vector3.Create(body_center[0], body_center[1] + 0.2 * scale, body_center[2] + 1.3 * facing * scale)
+            tail_tip = Vector3.Create(body_center[0], body_center[1] + 0.8 * scale, body_center[2] + 1.6 * facing * scale)
+            AI4Animation.Draw.Cylinder(tail_base, tail_mid, 0.12 * scale, 0.08 * scale, 6, color_accent)
+            # Flame spheres at the tip
+            AI4Animation.Draw.Sphere(tail_tip, 0.35 * scale, 8, get_color((231, 76, 60, 255))) # red
+            AI4Animation.Draw.Sphere(Vector3.Create(tail_tip[0], tail_tip[1] + 0.25 * scale, tail_tip[2] - 0.15 * facing * scale), 0.25 * scale, 6, get_color((243, 156, 18, 255))) # orange
+            AI4Animation.Draw.Sphere(Vector3.Create(tail_tip[0], tail_tip[1] + 0.45 * scale, tail_tip[2] - 0.25 * facing * scale), 0.15 * scale, 6, get_color((241, 196, 15, 255))) # yellow
+
+        elif pal.type == "Water":
+            color_body = get_color((52, 152, 219, 255))   # Bright Blue
+            color_accent = get_color((174, 214, 241, 255)) # Light Blue
+            color_belly = get_color((240, 248, 255, 255))  # Alice White
+            
+            # 1. Body & Head
+            body_center = Vector3.Create(pos[0], pos[1] - 0.2 * scale, pos[2] + 0.1 * facing * scale)
+            head_center = Vector3.Create(pos[0], pos[1] + 0.7 * scale, pos[2] - 0.3 * facing * scale)
+            AI4Animation.Draw.Sphere(body_center, 1.05 * scale, 12, color_body)
+            AI4Animation.Draw.Sphere(head_center, 0.85 * scale, 12, color_body)
+            
+            # 2. White Belly Patch
+            belly_center = Vector3.Create(pos[0], pos[1] - 0.1 * scale, pos[2] - 0.7 * facing * scale)
+            AI4Animation.Draw.Sphere(belly_center, 0.5 * scale, 8, color_belly)
+
+            # 3. Face
+            # Eyes
+            eye_y = head_center[1] + 0.15 * scale
+            eye_z = head_center[2] - 0.65 * facing * scale
+            eye_xl = head_center[0] - 0.3 * scale
+            eye_xr = head_center[0] + 0.3 * scale
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xl, eye_y, eye_z), 0.12 * scale, 6, get_color(color_eye_bg))
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xr, eye_y, eye_z), 0.12 * scale, 6, get_color(color_eye_bg))
+            # Eye Highlights
+            hl_z = eye_z - 0.08 * facing * scale
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xl + 0.04 * scale, eye_y + 0.04 * scale, hl_z), 0.04 * scale, 4, get_color(color_eye_fg))
+            AI4Animation.Draw.Sphere(Vector3.Create(eye_xr + 0.04 * scale, eye_y + 0.04 * scale, hl_z), 0.04 * scale, 4, get_color(color_eye_fg))
+            # Cheeks
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0] - 0.45 * scale, head_center[1] - 0.05 * scale, eye_z), 0.12 * scale, 6, get_color(color_cheek))
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0] + 0.45 * scale, head_center[1] - 0.05 * scale, eye_z), 0.12 * scale, 6, get_color(color_cheek))
+            # Mouth
+            AI4Animation.Draw.Sphere(Vector3.Create(head_center[0], head_center[1] - 0.15 * scale, eye_z - 0.05 * facing * scale), 0.07 * scale, 6, get_color(color_mouth))
+
+            # 4. Flipper Ears (Side Fins)
+            AI4Animation.Draw.Cylinder(
+                Vector3.Create(head_center[0] - 0.55 * scale, head_center[1] - 0.05 * scale, head_center[2]),
+                Vector3.Create(head_center[0] - 1.1 * scale, head_center[1] - 0.25 * scale, head_center[2] - 0.2 * facing * scale),
+                0.15 * scale, 0.02 * scale, 8, color_accent
+            )
+            AI4Animation.Draw.Cylinder(
+                Vector3.Create(head_center[0] + 0.55 * scale, head_center[1] - 0.05 * scale, head_center[2]),
+                Vector3.Create(head_center[0] + 1.1 * scale, head_center[1] - 0.25 * scale, head_center[2] - 0.2 * facing * scale),
+                0.15 * scale, 0.02 * scale, 8, color_accent
+            )
+
+            # 5. Dorsal Fin on Back
+            AI4Animation.Draw.Cylinder(
+                Vector3.Create(body_center[0], body_center[1] + 0.5 * scale, body_center[2] + 0.3 * facing * scale),
+                Vector3.Create(body_center[0], body_center[1] + 1.3 * scale, body_center[2] + 0.9 * facing * scale),
+                0.16 * scale, 0.01 * scale, 6, color_body
+            )
+
+            # 6. Otter Flippers (Limbs)
+            flipper_offsets = [
+                (-0.45, -0.4, -0.4, -1.0, -0.7, -0.6),
+                (0.45, -0.4, -0.4, 1.0, -0.7, -0.6)
+            ]
+            for ox, oy, oz, dx, dy, dz in flipper_offsets:
+                start_p = Vector3.Create(body_center[0] + ox * scale, body_center[1] + oy * scale, body_center[2] + oz * facing * scale)
+                end_p = Vector3.Create(body_center[0] + dx * scale, body_center[1] + dy * scale, body_center[2] + dz * facing * scale)
+                AI4Animation.Draw.Cylinder(start_p, end_p, 0.18 * scale, 0.05 * scale, 6, color_body)
+                AI4Animation.Draw.Sphere(end_p, 0.1 * scale, 6, color_accent) # Flipper tip
+
+            # 7. Seal Tail (Whale/Otter Flipper)
+            tail_base = Vector3.Create(body_center[0], body_center[1] - 0.3 * scale, body_center[2] + 0.8 * facing * scale)
+            tail_end = Vector3.Create(body_center[0], body_center[1] - 0.4 * scale, body_center[2] + 1.5 * facing * scale)
+            AI4Animation.Draw.Cylinder(tail_base, tail_end, 0.16 * scale, 0.1 * scale, 6, color_body)
+            # V-Shape tail fins
+            AI4Animation.Draw.Cylinder(
+                tail_end,
+                Vector3.Create(tail_end[0] - 0.45 * scale, tail_end[1] - 0.1 * scale, tail_end[2] + 0.3 * facing * scale),
+                0.08 * scale, 0.01 * scale, 6, color_accent
+            )
+            AI4Animation.Draw.Cylinder(
+                tail_end,
+                Vector3.Create(tail_end[0] + 0.45 * scale, tail_end[1] - 0.1 * scale, tail_end[2] + 0.3 * facing * scale),
+                0.08 * scale, 0.01 * scale, 6, color_accent
             )
 
     def on_draw(self):
