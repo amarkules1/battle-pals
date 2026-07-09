@@ -83,9 +83,9 @@ class StarterCard:
 class StarterView:
     def __init__(self):
         self.cards = [
-            StarterCard("Leaflet", "Grass", create_leaflet, COLOR_TYPE_GRASS),
+            StarterCard("Leaflet", "Grass/Wind", create_leaflet, COLOR_TYPE_GRASS),
             StarterCard("Pyropup", "Fire", create_pyropup, COLOR_TYPE_FIRE),
-            StarterCard("Aquasplash", "Water", create_aquasplash, COLOR_TYPE_WATER)
+            StarterCard("Aquasplash", "Water/Ice", create_aquasplash, COLOR_TYPE_WATER)
         ]
 
     def on_show_view(self):

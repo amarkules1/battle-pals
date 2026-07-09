@@ -25,7 +25,23 @@ MOVES = {
         accuracy=1.0,
         description="Scratches the enemy with sharp claws."
     ),
-    
+    # Wind moves
+    "Gust": Move(
+        name="Gust",
+        pal_type="Wind",
+        power=40,
+        accuracy=1.0,
+        description="Creates a strong gust of wind."
+    ),
+
+    # Ice moves
+    "Ice Shard": Move(
+        name="Ice Shard",
+        pal_type="Ice",
+        power=40,
+        accuracy=1.0,
+        description="Fires frozen ice shards at high speed."
+    ),
     # Grass moves
     "Razor Leaf": Move(
         name="Razor Leaf",

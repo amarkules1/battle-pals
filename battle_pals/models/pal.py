@@ -1,12 +1,67 @@
+import os
+import csv
 import random
 import math
 from battle_pals.models.move import MOVES
 from ai4animation.Math import Vector3
 
+# Dynamic type matrix loaded from CSV
+TYPE_MATRIX = {}
+
+def load_type_matrix():
+    global TYPE_MATRIX
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(current_dir, "..", "type_matrix.csv")
+    
+    if os.path.exists(csv_path):
+        try:
+            with open(csv_path, mode='r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                headers = next(reader) # headers: ["Attacker", "Normal", "Fire", ...]
+                defender_types = [h.strip() for h in headers[1:]]
+                
+                for row in reader:
+                    if not row or not row[0].strip():
+                        continue
+                    attacker = row[0].strip()
+                    for idx, val in enumerate(row[1:]):
+                        if idx < len(defender_types):
+                            defender = defender_types[idx]
+                            TYPE_MATRIX[(attacker, defender)] = float(val)
+        except Exception as e:
+            print(f"Error loading type matrix CSV: {e}")
+            initialize_fallback_matrix()
+    else:
+        print(f"Type matrix CSV not found at {csv_path}. Using fallback.")
+        initialize_fallback_matrix()
+
+def initialize_fallback_matrix():
+    global TYPE_MATRIX
+    fallback = {
+        ("Fire", "Grass"): 2.0,
+        ("Grass", "Water"): 2.0,
+        ("Water", "Fire"): 2.0,
+        ("Grass", "Fire"): 0.5,
+        ("Water", "Grass"): 0.5,
+        ("Fire", "Water"): 0.5,
+    }
+    TYPE_MATRIX.clear()
+    TYPE_MATRIX.update(fallback)
+
+# Load at import time
+load_type_matrix()
+
 class Pal:
     def __init__(self, name, pal_type, level, hp, attack, defense, speed, moves_list, is_player=False):
         self.name = name
-        self.type = pal_type  # "Fire", "Water", "Grass"
+        
+        # Support dual-type strings, e.g. "Grass/Wind" -> ["Grass", "Wind"]
+        if isinstance(pal_type, str):
+            self.types = [t.strip() for t in pal_type.split("/") if t.strip()]
+        else:
+            self.types = list(pal_type)
+            
+        self.type = self.types[0] if self.types else "Normal"
         self.level = level
         self.max_hp = hp
         self.hp = hp
@@ -126,17 +181,15 @@ class Pal:
                 self.is_fainted = True
 
     @staticmethod
-    def get_effectiveness(move_type, target_type):
-        """Standard Fire-Water-Grass type relationships."""
-        relations = {
-            ("Fire", "Grass"): 2.0,
-            ("Grass", "Water"): 2.0,
-            ("Water", "Fire"): 2.0,
-            ("Grass", "Fire"): 0.5,
-            ("Water", "Grass"): 0.5,
-            ("Fire", "Water"): 0.5,
-        }
-        return relations.get((move_type, target_type), 1.0)
+    def get_effectiveness(move_type, target_types):
+        """Calculates effectiveness of move against target type list or slash-separated string."""
+        if isinstance(target_types, str):
+            target_types = [t.strip() for t in target_types.split("/") if t.strip()]
+            
+        mult = 1.0
+        for defender_type in target_types:
+            mult *= TYPE_MATRIX.get((move_type, defender_type), 1.0)
+        return mult
 
     def use_move(self, move, target):
         """
@@ -155,7 +208,7 @@ class Pal:
 
         # 1. Damage Category
         if move.category == "Physical" or move.category == "Special":
-            eff = self.get_effectiveness(move.type, target.type)
+            eff = self.get_effectiveness(move.type, target.types)
             
             a_d_ratio = self.attack / max(1, target.defense)
             base_dmg = (((2 * self.level / 5 + 2) * move.power * a_d_ratio) / 50) + 2
@@ -167,17 +220,25 @@ class Pal:
             damage = int(base_dmg * eff * random_factor * crit_multiplier)
             damage = max(1, damage)  # Minimum 1 damage
 
-            target.take_damage(damage)
+            # If immune, damage is 0
+            if eff == 0.0:
+                damage = 0
+
+            if damage > 0:
+                target.take_damage(damage)
 
             if critical_chance:
                 logs.append("A critical hit!")
 
             if eff > 1.0:
                 logs.append("It's super effective!")
-            elif eff < 1.0:
+            elif 0.0 < eff < 1.0:
                 logs.append("It's not very effective...")
+            elif eff == 0.0:
+                logs.append(f"It doesn't affect {target.name}...")
 
-            logs.append(f"{target.name} took {damage} damage!")
+            if damage > 0:
+                logs.append(f"{target.name} took {damage} damage!")
 
         # 2. Status Category
         elif move.category == "Status" and move.effect:
@@ -205,13 +266,13 @@ class Pal:
 def create_leaflet(is_player=False):
     return Pal(
         name="Leaflet",
-        pal_type="Grass",
+        pal_type="Grass/Wind",
         level=5,
         hp=24,
         attack=12,
         defense=14,
         speed=10,
-        moves_list=["Tackle", "Razor Leaf", "Synthesize"],
+        moves_list=["Gust", "Razor Leaf", "Synthesize"],
         is_player=is_player
     )
 
@@ -231,13 +292,13 @@ def create_pyropup(is_player=False):
 def create_aquasplash(is_player=False):
     return Pal(
         name="Aquasplash",
-        pal_type="Water",
+        pal_type="Water/Ice",
         level=5,
         hp=22,
         attack=13,
         defense=12,
         speed=11,
-        moves_list=["Tackle", "Water Gun", "Tail Whip"],
+        moves_list=["Ice Shard", "Water Gun", "Tail Whip"],
         is_player=is_player
     )
 

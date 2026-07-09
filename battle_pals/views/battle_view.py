@@ -5,7 +5,10 @@ from battle_pals.constants import (
     COLOR_BG_DARK, COLOR_BG_PANEL, COLOR_BORDER, 
     COLOR_TEXT_PRIMARY, COLOR_TEXT_MUTED,
     COLOR_HP_GREEN, COLOR_HP_YELLOW, COLOR_HP_RED, COLOR_HP_BG,
-    COLOR_TYPE_FIRE, COLOR_TYPE_WATER, COLOR_TYPE_GRASS
+    COLOR_TYPE_FIRE, COLOR_TYPE_WATER, COLOR_TYPE_GRASS, COLOR_TYPE_NORMAL,
+    COLOR_TYPE_ELECTRIC, COLOR_TYPE_ICE, COLOR_TYPE_EARTH, COLOR_TYPE_WIND,
+    COLOR_TYPE_TOXIC, COLOR_TYPE_MIND, COLOR_TYPE_METAL, COLOR_TYPE_LIGHT,
+    COLOR_TYPE_SHADOW
 )
 from battle_pals.views.game_over_view import GameOverView
 from ai4animation import AI4Animation, Vector3
@@ -30,10 +33,19 @@ class MoveButton:
 
     def draw(self, sw, sh):
         type_colors = {
+            "Normal": COLOR_TYPE_NORMAL,
             "Fire": COLOR_TYPE_FIRE,
             "Water": COLOR_TYPE_WATER,
             "Grass": COLOR_TYPE_GRASS,
-            "Normal": COLOR_TEXT_MUTED
+            "Electric": COLOR_TYPE_ELECTRIC,
+            "Ice": COLOR_TYPE_ICE,
+            "Earth": COLOR_TYPE_EARTH,
+            "Wind": COLOR_TYPE_WIND,
+            "Toxic": COLOR_TYPE_TOXIC,
+            "Mind": COLOR_TYPE_MIND,
+            "Metal": COLOR_TYPE_METAL,
+            "Light": COLOR_TYPE_LIGHT,
+            "Shadow": COLOR_TYPE_SHADOW
         }
         accent_color = type_colors.get(self.move.type, COLOR_BORDER)
         
