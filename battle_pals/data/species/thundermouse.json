@@ -1,0 +1,65 @@
+{
+    "name": "Thundermouse",
+    "types": [
+        "Electric"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 75,
+        "defense": 50,
+        "speed": 110
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Thunder Shock"
+        },
+        {
+            "level": 8,
+            "move": "Spark"
+        },
+        {
+            "level": 15,
+            "move": "Thunderbolt"
+        },
+        {
+            "level": 22,
+            "move": "Volt Tackle"
+        }
+    ],
+    "trait": "Volt Absorb",
+    "evolves_from": "Sparky",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "Fires high-voltage beams from its lightning-bolt tail.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            243,
+            156,
+            18,
+            255
+        ],
+        "accent_color": [
+            230,
+            126,
+            34,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "flame",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "name": "Phantasm",
+    "types": [
+        "Shadow",
+        "Mind"
+    ],
+    "base_stats": {
+        "hp": 80,
+        "attack": 85,
+        "defense": 70,
+        "speed": 105
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Bite"
+        },
+        {
+            "level": 14,
+            "move": "Shadow Sneak"
+        },
+        {
+            "level": 20,
+            "move": "Shadow Ball"
+        },
+        {
+            "level": 30,
+            "move": "Future Sight"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Umbra",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A floating phantom that uses illusions and nightmare energy.",
+    "appearance": {
+        "base_shape": "blob",
+        "body_color": [
+            15,
+            23,
+            42,
+            255
+        ],
+        "accent_color": [
+            139,
+            92,
+            246,
+            255
+        ],
+        "belly_color": [
+            30,
+            41,
+            59,
+            255
+        ],
+        "ears": "none",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "bat"
+    }
+}

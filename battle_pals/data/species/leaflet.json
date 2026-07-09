@@ -1,0 +1,70 @@
+{
+    "name": "Leaflet",
+    "types": [
+        "Grass",
+        "Wind"
+    ],
+    "base_stats": {
+        "hp": 45,
+        "attack": 49,
+        "defense": 65,
+        "speed": 45
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 3,
+            "move": "Gust"
+        },
+        {
+            "level": 5,
+            "move": "Razor Leaf"
+        },
+        {
+            "level": 8,
+            "move": "Synthesize"
+        },
+        {
+            "level": 12,
+            "move": "Mega Drain"
+        }
+    ],
+    "trait": "Overgrow",
+    "evolves_from": null,
+    "evolves_into": "Florafox",
+    "evolution_level": 16,
+    "description": "A small grassy seedling that floats gracefully on wind currents.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            115,
+            198,
+            80,
+            255
+        ],
+        "accent_color": [
+            46,
+            204,
+            113,
+            255
+        ],
+        "belly_color": [
+            215,
+            235,
+            150,
+            255
+        ],
+        "ears": "leaf",
+        "tail": "leaf",
+        "head_sprout": true,
+        "horn": "none",
+        "wings": "none"
+    }
+}

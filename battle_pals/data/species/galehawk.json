@@ -1,0 +1,70 @@
+{
+    "name": "Galehawk",
+    "types": [
+        "Wind",
+        "Light"
+    ],
+    "base_stats": {
+        "hp": 65,
+        "attack": 75,
+        "defense": 60,
+        "speed": 105
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 3,
+            "move": "Gust"
+        },
+        {
+            "level": 12,
+            "move": "Wing Attack"
+        },
+        {
+            "level": 18,
+            "move": "Air Cutter"
+        },
+        {
+            "level": 24,
+            "move": "Tailwind"
+        },
+        {
+            "level": 30,
+            "move": "Hurricane"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Swiftwing",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A golden bird of prey that shoots rays of sun from its feathers.",
+    "appearance": {
+        "base_shape": "bird",
+        "body_color": [
+            241,
+            196,
+            15,
+            255
+        ],
+        "accent_color": [
+            230,
+            126,
+            34,
+            255
+        ],
+        "belly_color": [
+            253,
+            254,
+            220,
+            255
+        ],
+        "ears": "none",
+        "tail": "none",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "feathered"
+    }
+}

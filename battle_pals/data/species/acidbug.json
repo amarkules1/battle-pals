@@ -1,0 +1,66 @@
+{
+    "name": "Acidbug",
+    "types": [
+        "Toxic",
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 70,
+        "attack": 65,
+        "defense": 95,
+        "speed": 50
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Harden"
+        },
+        {
+            "level": 4,
+            "move": "Acid"
+        },
+        {
+            "level": 10,
+            "move": "Rock Throw"
+        },
+        {
+            "level": 16,
+            "move": "Acid Armor"
+        },
+        {
+            "level": 22,
+            "move": "Sludge Bomb"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "An armored insectoid beetle that sprays heavy acid blocks.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            141,
+            110,
+            99,
+            255
+        ],
+        "accent_color": [
+            156,
+            39,
+            176,
+            255
+        ],
+        "belly_color": [
+            225,
+            190,
+            231,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

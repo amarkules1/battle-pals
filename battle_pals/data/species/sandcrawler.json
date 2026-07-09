@@ -1,0 +1,61 @@
+{
+    "name": "Sandcrawler",
+    "types": [
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 80,
+        "defense": 80,
+        "speed": 55
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 5,
+            "move": "Sandstorm"
+        },
+        {
+            "level": 10,
+            "move": "Mud Shot"
+        },
+        {
+            "level": 16,
+            "move": "Earth Power"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "An insectoid crawler that triggers dust and sandstorms.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            210,
+            180,
+            140,
+            255
+        ],
+        "accent_color": [
+            139,
+            128,
+            0,
+            255
+        ],
+        "belly_color": [
+            245,
+            222,
+            179,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

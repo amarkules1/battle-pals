@@ -1,0 +1,61 @@
+{
+    "name": "Sparky",
+    "types": [
+        "Electric"
+    ],
+    "base_stats": {
+        "hp": 35,
+        "attack": 55,
+        "defense": 30,
+        "speed": 90
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Thunder Shock"
+        },
+        {
+            "level": 8,
+            "move": "Spark"
+        },
+        {
+            "level": 12,
+            "move": "Thunder Wave"
+        }
+    ],
+    "trait": "Volt Absorb",
+    "evolves_from": null,
+    "evolves_into": "Thundermouse",
+    "evolution_level": 15,
+    "description": "A small yellow rodent that stores electrical static in its cheeks.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            241,
+            196,
+            15,
+            255
+        ],
+        "accent_color": [
+            243,
+            156,
+            18,
+            255
+        ],
+        "belly_color": [
+            253,
+            254,
+            220,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "flame",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

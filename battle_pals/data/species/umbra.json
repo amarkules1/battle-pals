@@ -1,0 +1,61 @@
+{
+    "name": "Umbra",
+    "types": [
+        "Shadow"
+    ],
+    "base_stats": {
+        "hp": 55,
+        "attack": 65,
+        "defense": 50,
+        "speed": 80
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Bite"
+        },
+        {
+            "level": 9,
+            "move": "Swift"
+        },
+        {
+            "level": 14,
+            "move": "Shadow Sneak"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": "Phantasm",
+    "evolution_level": 20,
+    "description": "A feline Pal that dissolves into shadows to stalk silently.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            30,
+            41,
+            59,
+            255
+        ],
+        "accent_color": [
+            14,
+            165,
+            233,
+            255
+        ],
+        "belly_color": [
+            241,
+            245,
+            249,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

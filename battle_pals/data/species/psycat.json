@@ -1,0 +1,65 @@
+{
+    "name": "Psycat",
+    "types": [
+        "Mind"
+    ],
+    "base_stats": {
+        "hp": 65,
+        "attack": 85,
+        "defense": 60,
+        "speed": 100
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Confusion"
+        },
+        {
+            "level": 12,
+            "move": "Psybeam"
+        },
+        {
+            "level": 22,
+            "move": "Psychic"
+        },
+        {
+            "level": 28,
+            "move": "Future Sight"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Psiwyrm",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "An elegant feline Pal that bends spoons and controls objects.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            233,
+            30,
+            99,
+            255
+        ],
+        "accent_color": [
+            156,
+            39,
+            176,
+            255
+        ],
+        "belly_color": [
+            248,
+            187,
+            208,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

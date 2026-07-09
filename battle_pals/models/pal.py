@@ -52,27 +52,52 @@ def initialize_fallback_matrix():
 load_type_matrix()
 
 class Pal:
-    def __init__(self, name, pal_type, level, hp, attack, defense, speed, moves_list, is_player=False):
-        self.name = name
-        
-        # Support dual-type strings, e.g. "Grass/Wind" -> ["Grass", "Wind"]
-        if isinstance(pal_type, str):
-            self.types = [t.strip() for t in pal_type.split("/") if t.strip()]
+    def __init__(self, species_or_name, level, is_player=False, stat_variations=None):
+        from battle_pals.models.species import SPECIES, Species
+        if isinstance(species_or_name, str):
+            species = SPECIES.get(species_or_name)
+            if not species:
+                species = Species(
+                    name=species_or_name,
+                    types=["Normal"],
+                    base_stats={"hp": 50, "attack": 50, "defense": 50, "speed": 50},
+                    learnset=[]
+                )
         else:
-            self.types = list(pal_type)
-            
-        self.type = self.types[0] if self.types else "Normal"
+            species = species_or_name
+
+        self.species = species
+        self.name = species.name
+        self.types = species.types
+        self.type = species.types[0] if species.types else "Normal"
         self.level = level
-        self.max_hp = hp
-        self.hp = hp
-        self.base_attack = attack
-        self.base_defense = defense
-        self.base_speed = speed
         self.is_player = is_player
-        
-        # Moves
-        self.moves = [MOVES[m] for m in moves_list if m in MOVES]
-        
+
+        # Set up stat variations (IVs: 0-15)
+        if stat_variations is None:
+            self.stat_variations = {
+                "hp": random.randint(0, 15),
+                "attack": random.randint(0, 15),
+                "defense": random.randint(0, 15),
+                "speed": random.randint(0, 15)
+            }
+        else:
+            self.stat_variations = stat_variations
+
+        # Compute level-scaled stats from species base and variation
+        self.max_hp = self.calculate_stat("hp")
+        self.hp = self.max_hp
+        self.base_attack = self.calculate_stat("attack")
+        self.base_defense = self.calculate_stat("defense")
+        self.base_speed = self.calculate_stat("speed")
+
+        # Teach moves based on species learnset and current level
+        self.moves = []
+        self.learn_moves_for_level()
+
+        # Status conditions
+        self.status_effects = []
+
         # Combat modifiers reset at start of battle
         self.stat_modifiers = {
             "attack": 1.0,
@@ -98,6 +123,28 @@ class Pal:
         self.faint_timer = 0.0
         self.is_fainted = False
 
+    def calculate_stat(self, stat_name):
+        base = self.species.base_stats.get(stat_name, 50)
+        variation = self.stat_variations.get(stat_name, 0)
+        if stat_name == "hp":
+            return int(((2 * base + variation) * self.level) / 50) + self.level + 10
+        else:
+            return int(((2 * base + variation) * self.level) / 50) + 5
+
+    def learn_moves_for_level(self):
+        available_moves = []
+        for learn_info in self.species.learnset:
+            if learn_info["level"] <= self.level:
+                available_moves.append(learn_info["move"])
+        unique_moves = []
+        for m_name in reversed(available_moves):
+            if m_name not in unique_moves:
+                unique_moves.append(m_name)
+            if len(unique_moves) >= 4:
+                break
+        from battle_pals.models.move import MOVES
+        self.moves = [MOVES[name] for name in reversed(unique_moves) if name in MOVES]
+
     @property
     def attack(self):
         return int(self.base_attack * self.stat_modifiers["attack"])
@@ -108,7 +155,10 @@ class Pal:
 
     @property
     def speed(self):
-        return int(self.base_speed * self.stat_modifiers["speed"])
+        mult = self.stat_modifiers["speed"]
+        if self.species.trait == "Chlorophyll":
+            mult *= 1.5
+        return int(self.base_speed * mult)
 
     def reset_battle_stats(self):
         """Resets battle stats (HP remains unchanged, but modifiers are reset)."""
@@ -217,7 +267,18 @@ class Pal:
             critical_chance = random.random() < 0.0625  # 6.25% critical hit chance
             crit_multiplier = 1.5 if critical_chance else 1.0
             
-            damage = int(base_dmg * eff * random_factor * crit_multiplier)
+            # Apply low-HP trait modifier (Blaze/Torrent/Overgrow)
+            trait_mult = 1.0
+            is_low_hp = (self.hp / self.max_hp) <= 0.33
+            if is_low_hp:
+                if self.species.trait == "Blaze" and move.type == "Fire":
+                    trait_mult = 1.5
+                elif self.species.trait == "Torrent" and move.type == "Water":
+                    trait_mult = 1.5
+                elif self.species.trait == "Overgrow" and move.type == "Grass":
+                    trait_mult = 1.5
+            
+            damage = int(base_dmg * eff * random_factor * crit_multiplier * trait_mult)
             damage = max(1, damage)  # Minimum 1 damage
 
             # If immune, damage is 0
@@ -229,6 +290,9 @@ class Pal:
 
             if critical_chance:
                 logs.append("A critical hit!")
+
+            if trait_mult > 1.0:
+                logs.append(f"{self.name}'s {self.species.trait} boosted the attack!")
 
             if eff > 1.0:
                 logs.append("It's super effective!")
@@ -256,51 +320,30 @@ class Pal:
                 multiplier = effect["mult"]
                 
                 if stat in target.stat_modifiers:
-                    target.stat_modifiers[stat] = max(0.4, target.stat_modifiers[stat] * multiplier)
-                    change_text = "fell" if multiplier < 1.0 else "rose"
-                    logs.append(f"{target.name}'s {stat.capitalize()} {change_text}!")
+                    if multiplier < 1.0 and target.species.trait == "Clear Body":
+                        logs.append(f"{target.name}'s Clear Body prevents stat reduction!")
+                    else:
+                        target.stat_modifiers[stat] = max(0.4, target.stat_modifiers[stat] * multiplier)
+                        change_text = "fell" if multiplier < 1.0 else "rose"
+                        logs.append(f"{target.name}'s {stat.capitalize()} {change_text}!")
                 
         return logs
 
 # Starter Pal Presets
 def create_leaflet(is_player=False):
-    return Pal(
-        name="Leaflet",
-        pal_type="Grass/Wind",
-        level=5,
-        hp=24,
-        attack=12,
-        defense=14,
-        speed=10,
-        moves_list=["Gust", "Razor Leaf", "Synthesize"],
-        is_player=is_player
-    )
+    from battle_pals.models.species import SPECIES
+    species = SPECIES.get("Leaflet")
+    return Pal(species, level=5, is_player=is_player)
 
 def create_pyropup(is_player=False):
-    return Pal(
-        name="Pyropup",
-        pal_type="Fire",
-        level=5,
-        hp=20,
-        attack=15,
-        defense=10,
-        speed=13,
-        moves_list=["Scratch", "Ember", "Growl"],
-        is_player=is_player
-    )
+    from battle_pals.models.species import SPECIES
+    species = SPECIES.get("Pyropup")
+    return Pal(species, level=5, is_player=is_player)
 
 def create_aquasplash(is_player=False):
-    return Pal(
-        name="Aquasplash",
-        pal_type="Water/Ice",
-        level=5,
-        hp=22,
-        attack=13,
-        defense=12,
-        speed=11,
-        moves_list=["Ice Shard", "Water Gun", "Tail Whip"],
-        is_player=is_player
-    )
+    from battle_pals.models.species import SPECIES
+    species = SPECIES.get("Aquasplash")
+    return Pal(species, level=5, is_player=is_player)
 
 STARTERS = {
     "Leaflet": create_leaflet,

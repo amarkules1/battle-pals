@@ -1,0 +1,65 @@
+{
+    "name": "Rattler",
+    "types": [
+        "Normal"
+    ],
+    "base_stats": {
+        "hp": 30,
+        "attack": 56,
+        "defense": 35,
+        "speed": 72
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 4,
+            "move": "Quick Attack"
+        },
+        {
+            "level": 7,
+            "move": "Bite"
+        },
+        {
+            "level": 10,
+            "move": "Tail Whip"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A quick rat Pal that lives in tall grass fields.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            155,
+            89,
+            182,
+            255
+        ],
+        "accent_color": [
+            142,
+            68,
+            173,
+            255
+        ],
+        "belly_color": [
+            241,
+            240,
+            230,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

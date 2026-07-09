@@ -1,0 +1,66 @@
+{
+    "name": "Luxor",
+    "types": [
+        "Light",
+        "Mind"
+    ],
+    "base_stats": {
+        "hp": 80,
+        "attack": 85,
+        "defense": 70,
+        "speed": 105
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Flash"
+        },
+        {
+            "level": 14,
+            "move": "Solar Flare"
+        },
+        {
+            "level": 24,
+            "move": "Dazzling Gleam"
+        },
+        {
+            "level": 30,
+            "move": "Judgment"
+        }
+    ],
+    "trait": "Chlorophyll",
+    "evolves_from": "Solaris",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A golden guardian that projects telekinetic shields made of light waves.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            253,
+            224,
+            71,
+            255
+        ],
+        "accent_color": [
+            253,
+            254,
+            220,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

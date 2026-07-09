@@ -1,0 +1,61 @@
+{
+    "name": "Spectre",
+    "types": [
+        "Shadow"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 75,
+        "defense": 60,
+        "speed": 95
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Pound"
+        },
+        {
+            "level": 4,
+            "move": "Shadow Sneak"
+        },
+        {
+            "level": 10,
+            "move": "Confuse"
+        },
+        {
+            "level": 16,
+            "move": "Shadow Ball"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A ghost Pal that fades in and out of phase, spooking wanderers.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            74,
+            85,
+            104,
+            200
+        ],
+        "accent_color": [
+            113,
+            128,
+            150,
+            200
+        ],
+        "belly_color": [
+            45,
+            55,
+            72,
+            200
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "name": "Swiftwing",
+    "types": [
+        "Normal",
+        "Wind"
+    ],
+    "base_stats": {
+        "hp": 40,
+        "attack": 45,
+        "defense": 35,
+        "speed": 75
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 3,
+            "move": "Gust"
+        },
+        {
+            "level": 8,
+            "move": "Quick Attack"
+        },
+        {
+            "level": 12,
+            "move": "Wing Attack"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": "Galehawk",
+    "evolution_level": 18,
+    "description": "A tiny bird Pal that flies at supersonic speeds.",
+    "appearance": {
+        "base_shape": "bird",
+        "body_color": [
+            245,
+            222,
+            179,
+            255
+        ],
+        "accent_color": [
+            210,
+            180,
+            140,
+            255
+        ],
+        "belly_color": [
+            255,
+            250,
+            240,
+            255
+        ],
+        "ears": "none",
+        "tail": "none",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "feathered"
+    }
+}

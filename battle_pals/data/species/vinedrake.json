@@ -1,0 +1,74 @@
+{
+    "name": "Vinedrake",
+    "types": [
+        "Grass",
+        "Dragon"
+    ],
+    "base_stats": {
+        "hp": 80,
+        "attack": 85,
+        "defense": 95,
+        "speed": 80
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 5,
+            "move": "Razor Leaf"
+        },
+        {
+            "level": 16,
+            "move": "Air Cutter"
+        },
+        {
+            "level": 20,
+            "move": "Leaf Blade"
+        },
+        {
+            "level": 32,
+            "move": "Solar Beam"
+        },
+        {
+            "level": 40,
+            "move": "Wood Hammer"
+        }
+    ],
+    "trait": "Overgrow",
+    "evolves_from": "Florafox",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A magnificent forest dragon that summons thick vines and gales.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            46,
+            204,
+            113,
+            255
+        ],
+        "accent_color": [
+            26,
+            188,
+            156,
+            255
+        ],
+        "belly_color": [
+            241,
+            250,
+            218,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "leaf",
+        "head_sprout": true,
+        "horn": "dual",
+        "wings": "feathered"
+    }
+}

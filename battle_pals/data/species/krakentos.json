@@ -1,0 +1,70 @@
+{
+    "name": "Krakentos",
+    "types": [
+        "Water",
+        "Toxic"
+    ],
+    "base_stats": {
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "speed": 78
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 6,
+            "move": "Water Gun"
+        },
+        {
+            "level": 14,
+            "move": "Water Pulse"
+        },
+        {
+            "level": 22,
+            "move": "Surf"
+        },
+        {
+            "level": 32,
+            "move": "Hydro Pump"
+        },
+        {
+            "level": 36,
+            "move": "Sludge Bomb"
+        }
+    ],
+    "trait": "Torrent",
+    "evolves_from": "Seashell",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A deep sea monster that floods shores and leaks corrosive ink.",
+    "appearance": {
+        "base_shape": "aquatic",
+        "body_color": [
+            22,
+            160,
+            133,
+            255
+        ],
+        "accent_color": [
+            142,
+            68,
+            173,
+            255
+        ],
+        "belly_color": [
+            26,
+            188,
+            156,
+            255
+        ],
+        "ears": "fins",
+        "tail": "flipper",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

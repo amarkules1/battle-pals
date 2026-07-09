@@ -1,0 +1,66 @@
+{
+    "name": "Noxious",
+    "types": [
+        "Toxic",
+        "Shadow"
+    ],
+    "base_stats": {
+        "hp": 65,
+        "attack": 85,
+        "defense": 65,
+        "speed": 75
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 4,
+            "move": "Acid"
+        },
+        {
+            "level": 10,
+            "move": "Poison Fang"
+        },
+        {
+            "level": 16,
+            "move": "Shadow Claw"
+        },
+        {
+            "level": 22,
+            "move": "Sludge Bomb"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A quadruped beast covered in toxic vapor and shadows.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            88,
+            24,
+            69,
+            255
+        ],
+        "accent_color": [
+            144,
+            12,
+            63,
+            255
+        ],
+        "belly_color": [
+            218,
+            247,
+            166,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

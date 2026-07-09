@@ -1,0 +1,66 @@
+{
+    "name": "Gravelord",
+    "types": [
+        "Earth",
+        "Metal"
+    ],
+    "base_stats": {
+        "hp": 85,
+        "attack": 100,
+        "defense": 125,
+        "speed": 55
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 5,
+            "move": "Rock Throw"
+        },
+        {
+            "level": 14,
+            "move": "Rock Slide"
+        },
+        {
+            "level": 20,
+            "move": "Iron Head"
+        },
+        {
+            "level": 28,
+            "move": "Earthquake"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Rocky",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "An armored lord of tectonic plates that crushes iron structures.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            78,
+            52,
+            46,
+            255
+        ],
+        "accent_color": [
+            120,
+            144,
+            156,
+            255
+        ],
+        "belly_color": [
+            141,
+            110,
+            99,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "dual",
+        "wings": "none"
+    }
+}

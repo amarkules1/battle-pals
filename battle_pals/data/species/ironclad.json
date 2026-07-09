@@ -1,0 +1,65 @@
+{
+    "name": "Ironclad",
+    "types": [
+        "Metal"
+    ],
+    "base_stats": {
+        "hp": 55,
+        "attack": 70,
+        "defense": 90,
+        "speed": 35
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Harden"
+        },
+        {
+            "level": 5,
+            "move": "Bullet Punch"
+        },
+        {
+            "level": 10,
+            "move": "Metal Claw"
+        },
+        {
+            "level": 15,
+            "move": "Iron Defense"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": "GigaMech",
+    "evolution_level": 25,
+    "description": "An armored armadillo clad in scrap steel plates.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            149,
+            165,
+            166,
+            255
+        ],
+        "accent_color": [
+            127,
+            140,
+            141,
+            255
+        ],
+        "belly_color": [
+            220,
+            220,
+            220,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

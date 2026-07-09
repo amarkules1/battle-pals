@@ -1,0 +1,70 @@
+{
+    "name": "Blazecat",
+    "types": [
+        "Fire",
+        "Shadow"
+    ],
+    "base_stats": {
+        "hp": 58,
+        "attack": 64,
+        "defense": 58,
+        "speed": 80
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 4,
+            "move": "Ember"
+        },
+        {
+            "level": 12,
+            "move": "Flame Wheel"
+        },
+        {
+            "level": 16,
+            "move": "Bite"
+        },
+        {
+            "level": 22,
+            "move": "Flamethrower"
+        }
+    ],
+    "trait": "Blaze",
+    "evolves_from": "Pyropup",
+    "evolves_into": "Infernoct",
+    "evolution_level": 32,
+    "description": "A stealthy feline Pal that stalks in the dark and breathes flames.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            192,
+            57,
+            43,
+            255
+        ],
+        "accent_color": [
+            142,
+            68,
+            173,
+            255
+        ],
+        "belly_color": [
+            241,
+            196,
+            15,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "flame",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

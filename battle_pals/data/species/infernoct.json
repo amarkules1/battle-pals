@@ -1,0 +1,70 @@
+{
+    "name": "Infernoct",
+    "types": [
+        "Fire",
+        "Shadow"
+    ],
+    "base_stats": {
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "speed": 100
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 4,
+            "move": "Ember"
+        },
+        {
+            "level": 16,
+            "move": "Bite"
+        },
+        {
+            "level": 22,
+            "move": "Flamethrower"
+        },
+        {
+            "level": 32,
+            "move": "Fire Blast"
+        },
+        {
+            "level": 40,
+            "move": "Dark Pulse"
+        }
+    ],
+    "trait": "Blaze",
+    "evolves_from": "Blazecat",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A feared demon Pal with wings made of pure ash and dark fire.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            44,
+            62,
+            80,
+            255
+        ],
+        "accent_color": [
+            231,
+            76,
+            60,
+            255
+        ],
+        "belly_color": [
+            155,
+            89,
+            182,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "flame",
+        "head_sprout": false,
+        "horn": "dual",
+        "wings": "bat"
+    }
+}

@@ -1,6 +1,15 @@
 # Battle Pals: Types and Stats System
 
-This document explains how stats and elemental types function in Battle Pals combat.
+This document explains how stats, species templates, dynamic specimens, and elemental types function in Battle Pals combat.
+
+---
+
+## 🧬 Species vs. Specimens
+
+Battle Pals implements a clean split between **Species** templates and unique **Specimens**:
+
+1. **Species**: A static template defined in a JSON file (e.g., `leaflet.json`). It specifies the base stats (HP, Attack, Defense, Speed), type(s), learnable moves (learnset), battle trait, evolution requirements, and visual 3D appearance configurations.
+2. **Specimen**: A unique, dynamic instance of a species generated during gameplay (represented by the `Pal` class). A specimen has a specific level, current HP, status conditions, and randomized **Stat Variations** (analogous to IVs).
 
 ---
 
@@ -12,6 +21,29 @@ Each Pal possesses four core stats that dictate their strength and speed in batt
 2. **Attack**: Modifies the damage dealt by physical or special moves.
 3. **Defense**: Reduces the damage taken from incoming attacks.
 4. **Speed**: Determines the prioritization of actions. The Pal with the higher Speed stat moves first in a combat round.
+
+### Stat Variations (Individual Values)
+When a specimen is generated, it is assigned a random integer between `0` and `15` for each stat (known as its **Stat Variation**). This ensures that two specimens of the same species and level have slightly different stats.
+
+### Stat Calculation Formulas
+Stats at a specific level $L$ are calculated from base stats and variations using the following formulas:
+
+$$\text{HP} = \text{int}\left( \frac{(2 \times \text{BaseHP} + \text{HP\_Variation}) \times L}{50} \right) + L + 10$$
+
+$$\text{Other Stat} = \text{int}\left( \frac{(2 \times \text{BaseStat} + \text{Stat\_Variation}) \times L}{50} \right) + 5$$
+
+---
+
+## 🌟 Battle Traits
+
+Species can have unique traits that grant passive bonuses in combat:
+
+* **Clear Body**: Grants complete immunity against status reductions (prevents enemy moves from lowering stats).
+* **Chlorophyll**: Boosts the specimen's Speed stat by `1.5x` in battle.
+* **Overgrow**: Boosts the power of Grass-type moves by `1.5x` when the specimen's HP falls below 33%.
+* **Blaze**: Boosts the power of Fire-type moves by `1.5x` when the specimen's HP falls below 33%.
+* **Torrent**: Boosts the power of Water-type moves by `1.5x` when the specimen's HP falls below 33%.
+
 
 ### Leveling & Stat Modifiers
 Stats scale as a Pal levels up. Additionally, during combat, certain moves (Status category) can apply modifiers that temporarily increase or decrease a Pal's stats (clamped between a minimum multiplier of `0.4` and a maximum of `2.0`).

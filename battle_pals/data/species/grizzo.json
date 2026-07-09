@@ -1,0 +1,69 @@
+{
+    "name": "Grizzo",
+    "types": [
+        "Normal"
+    ],
+    "base_stats": {
+        "hp": 120,
+        "attack": 80,
+        "defense": 70,
+        "speed": 40
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Pound"
+        },
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 5,
+            "move": "Double Slap"
+        },
+        {
+            "level": 20,
+            "move": "Slam"
+        },
+        {
+            "level": 25,
+            "move": "Body Slam"
+        },
+        {
+            "level": 30,
+            "move": "Hyper Beam"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Chubby",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A giant grizzly bear-like Pal that defends its territory fiercely.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            139,
+            69,
+            19,
+            255
+        ],
+        "accent_color": [
+            160,
+            82,
+            45,
+            255
+        ],
+        "belly_color": [
+            222,
+            184,
+            135,
+            255
+        ],
+        "ears": "puppy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "name": "Molehole",
+    "types": [
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 55,
+        "attack": 75,
+        "defense": 60,
+        "speed": 60
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 4,
+            "move": "Mud Slap"
+        },
+        {
+            "level": 8,
+            "move": "Rock Throw"
+        },
+        {
+            "level": 14,
+            "move": "Earth Power"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A mole Pal that digs deep underground caverns at high speed.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            109,
+            76,
+            65,
+            255
+        ],
+        "accent_color": [
+            244,
+            143,
+            177,
+            255
+        ],
+        "belly_color": [
+            215,
+            204,
+            200,
+            255
+        ],
+        "ears": "puppy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

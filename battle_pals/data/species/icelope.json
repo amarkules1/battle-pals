@@ -1,0 +1,66 @@
+{
+    "name": "Icelope",
+    "types": [
+        "Ice",
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 70,
+        "attack": 85,
+        "defense": 70,
+        "speed": 85
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 5,
+            "move": "Ice Shard"
+        },
+        {
+            "level": 10,
+            "move": "Rock Throw"
+        },
+        {
+            "level": 16,
+            "move": "Ice Beam"
+        },
+        {
+            "level": 22,
+            "move": "Icicle Crash"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "An antelope Pal with horns made of raw glacial ice crystals.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            224,
+            255,
+            255,
+            255
+        ],
+        "accent_color": [
+            0,
+            206,
+            209,
+            255
+        ],
+        "belly_color": [
+            240,
+            248,
+            255,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "dual",
+        "wings": "none"
+    }
+}

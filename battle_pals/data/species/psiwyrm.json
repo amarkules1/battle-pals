@@ -1,0 +1,61 @@
+{
+    "name": "Psiwyrm",
+    "types": [
+        "Mind"
+    ],
+    "base_stats": {
+        "hp": 40,
+        "attack": 60,
+        "defense": 45,
+        "speed": 75
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Confusion"
+        },
+        {
+            "level": 9,
+            "move": "Swift"
+        },
+        {
+            "level": 12,
+            "move": "Psybeam"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": "Psycat",
+    "evolution_level": 22,
+    "description": "A floating psychic worm that uses telekinesis to hover.",
+    "appearance": {
+        "base_shape": "aquatic",
+        "body_color": [
+            244,
+            143,
+            177,
+            255
+        ],
+        "accent_color": [
+            240,
+            98,
+            146,
+            255
+        ],
+        "belly_color": [
+            252,
+            228,
+            236,
+            255
+        ],
+        "ears": "fins",
+        "tail": "flipper",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

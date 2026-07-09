@@ -1,0 +1,65 @@
+{
+    "name": "Snowball",
+    "types": [
+        "Ice"
+    ],
+    "base_stats": {
+        "hp": 75,
+        "attack": 65,
+        "defense": 85,
+        "speed": 60
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Powder Snow"
+        },
+        {
+            "level": 8,
+            "move": "Ice Shard"
+        },
+        {
+            "level": 15,
+            "move": "Ice Beam"
+        },
+        {
+            "level": 22,
+            "move": "Blizzard"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Frosty",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A rolling snowball monster that grows larger in snowstorms.",
+    "appearance": {
+        "base_shape": "blob",
+        "body_color": [
+            240,
+            255,
+            255,
+            255
+        ],
+        "accent_color": [
+            176,
+            224,
+            230,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "none",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

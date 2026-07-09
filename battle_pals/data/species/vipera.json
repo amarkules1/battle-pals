@@ -1,0 +1,65 @@
+{
+    "name": "Vipera",
+    "types": [
+        "Toxic"
+    ],
+    "base_stats": {
+        "hp": 85,
+        "attack": 75,
+        "defense": 70,
+        "speed": 65
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Acid"
+        },
+        {
+            "level": 8,
+            "move": "Toxic"
+        },
+        {
+            "level": 18,
+            "move": "Poison Fang"
+        },
+        {
+            "level": 24,
+            "move": "Sludge Bomb"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Gloop",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A venomous snake-like Pal that spits acid at its prey.",
+    "appearance": {
+        "base_shape": "aquatic",
+        "body_color": [
+            125,
+            60,
+            152,
+            255
+        ],
+        "accent_color": [
+            46,
+            204,
+            113,
+            255
+        ],
+        "belly_color": [
+            212,
+            172,
+            232,
+            255
+        ],
+        "ears": "fins",
+        "tail": "flipper",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

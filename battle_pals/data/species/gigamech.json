@@ -1,0 +1,70 @@
+{
+    "name": "GigaMech",
+    "types": [
+        "Metal",
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 85,
+        "attack": 110,
+        "defense": 130,
+        "speed": 55
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 5,
+            "move": "Bullet Punch"
+        },
+        {
+            "level": 10,
+            "move": "Metal Claw"
+        },
+        {
+            "level": 15,
+            "move": "Iron Defense"
+        },
+        {
+            "level": 25,
+            "move": "Iron Head"
+        },
+        {
+            "level": 32,
+            "move": "Earthquake"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": "Ironclad",
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A gigantic steam engine golem built from ancient metal cores.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            52,
+            73,
+            94,
+            255
+        ],
+        "accent_color": [
+            149,
+            165,
+            166,
+            255
+        ],
+        "belly_color": [
+            127,
+            140,
+            141,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "dual",
+        "wings": "none"
+    }
+}

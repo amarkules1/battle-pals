@@ -1,0 +1,61 @@
+{
+    "name": "Solaris",
+    "types": [
+        "Light"
+    ],
+    "base_stats": {
+        "hp": 55,
+        "attack": 65,
+        "defense": 50,
+        "speed": 80
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Flash"
+        },
+        {
+            "level": 9,
+            "move": "Swift"
+        },
+        {
+            "level": 14,
+            "move": "Solar Flare"
+        }
+    ],
+    "trait": "Chlorophyll",
+    "evolves_from": null,
+    "evolves_into": "Luxor",
+    "evolution_level": 24,
+    "description": "A sun spirit that absorbs UV rays to output white light bursts.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            254,
+            249,
+            195,
+            255
+        ],
+        "accent_color": [
+            234,
+            179,
+            8,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

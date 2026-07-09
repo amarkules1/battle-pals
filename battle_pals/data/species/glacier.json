@@ -1,0 +1,66 @@
+{
+    "name": "Glacier",
+    "types": [
+        "Ice",
+        "Metal"
+    ],
+    "base_stats": {
+        "hp": 90,
+        "attack": 90,
+        "defense": 120,
+        "speed": 40
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Harden"
+        },
+        {
+            "level": 4,
+            "move": "Ice Shard"
+        },
+        {
+            "level": 12,
+            "move": "Bullet Punch"
+        },
+        {
+            "level": 18,
+            "move": "Icicle Crash"
+        },
+        {
+            "level": 26,
+            "move": "Blizzard"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A massive golem covered in sheet metal and unmelting ice armor.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            189,
+            195,
+            199,
+            255
+        ],
+        "accent_color": [
+            116,
+            215,
+            238,
+            255
+        ],
+        "belly_color": [
+            236,
+            240,
+            241,
+            255
+        ],
+        "ears": "none",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

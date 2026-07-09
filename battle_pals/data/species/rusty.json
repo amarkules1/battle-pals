@@ -1,0 +1,62 @@
+{
+    "name": "Rusty",
+    "types": [
+        "Metal",
+        "Toxic"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 65,
+        "defense": 80,
+        "speed": 50
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Acid"
+        },
+        {
+            "level": 10,
+            "move": "Bullet Punch"
+        },
+        {
+            "level": 16,
+            "move": "Sludge Bomb"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A discarded machine Pal that leaks heavy acids and rusts over.",
+    "appearance": {
+        "base_shape": "blob",
+        "body_color": [
+            120,
+            110,
+            90,
+            255
+        ],
+        "accent_color": [
+            211,
+            84,
+            0,
+            255
+        ],
+        "belly_color": [
+            189,
+            195,
+            199,
+            255
+        ],
+        "ears": "none",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "name": "Slothfit",
+    "types": [
+        "Normal"
+    ],
+    "base_stats": {
+        "hp": 80,
+        "attack": 65,
+        "defense": 65,
+        "speed": 30
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Pound"
+        },
+        {
+            "level": 4,
+            "move": "Growl"
+        },
+        {
+            "level": 10,
+            "move": "Scratch"
+        },
+        {
+            "level": 16,
+            "move": "Slam"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A very lazy sloth Pal that values relaxation above all else.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            188,
+            170,
+            150,
+            255
+        ],
+        "accent_color": [
+            140,
+            120,
+            100,
+            255
+        ],
+        "belly_color": [
+            240,
+            230,
+            220,
+            255
+        ],
+        "ears": "puppy",
+        "tail": "none",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

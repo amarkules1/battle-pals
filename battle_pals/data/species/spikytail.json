@@ -1,0 +1,62 @@
+{
+    "name": "Spikytail",
+    "types": [
+        "Normal",
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 65,
+        "attack": 75,
+        "defense": 70,
+        "speed": 65
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 4,
+            "move": "Growl"
+        },
+        {
+            "level": 8,
+            "move": "Rock Throw"
+        },
+        {
+            "level": 14,
+            "move": "Slam"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A small mammalian Pal with rocky spikes lining its tail shaft.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            205,
+            133,
+            63,
+            255
+        ],
+        "accent_color": [
+            139,
+            69,
+            19,
+            255
+        ],
+        "belly_color": [
+            245,
+            222,
+            179,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

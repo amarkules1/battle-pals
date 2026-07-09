@@ -1,0 +1,61 @@
+{
+    "name": "Brainy",
+    "types": [
+        "Mind"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 75,
+        "defense": 70,
+        "speed": 55
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 4,
+            "move": "Confusion"
+        },
+        {
+            "level": 10,
+            "move": "Calm Mind"
+        },
+        {
+            "level": 16,
+            "move": "Mind Blast"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A floating brain Pal. It reads minds to predict enemy moves.",
+    "appearance": {
+        "base_shape": "blob",
+        "body_color": [
+            248,
+            187,
+            208,
+            255
+        ],
+        "accent_color": [
+            244,
+            143,
+            177,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "none",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

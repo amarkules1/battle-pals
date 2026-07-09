@@ -1,0 +1,66 @@
+{
+    "name": "Steelwing",
+    "types": [
+        "Metal",
+        "Wind"
+    ],
+    "base_stats": {
+        "hp": 65,
+        "attack": 80,
+        "defense": 85,
+        "speed": 90
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Gust"
+        },
+        {
+            "level": 4,
+            "move": "Metal Claw"
+        },
+        {
+            "level": 12,
+            "move": "Wing Attack"
+        },
+        {
+            "level": 18,
+            "move": "Iron Head"
+        },
+        {
+            "level": 24,
+            "move": "Flash Cannon"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A steel bird that slices clouds using razor-sharp metallic feathers.",
+    "appearance": {
+        "base_shape": "bird",
+        "body_color": [
+            189,
+            195,
+            199,
+            255
+        ],
+        "accent_color": [
+            52,
+            73,
+            94,
+            255
+        ],
+        "belly_color": [
+            236,
+            240,
+            241,
+            255
+        ],
+        "ears": "none",
+        "tail": "none",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "feathered"
+    }
+}

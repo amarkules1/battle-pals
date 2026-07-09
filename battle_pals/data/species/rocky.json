@@ -1,0 +1,65 @@
+{
+    "name": "Rocky",
+    "types": [
+        "Earth"
+    ],
+    "base_stats": {
+        "hp": 50,
+        "attack": 65,
+        "defense": 85,
+        "speed": 35
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Harden"
+        },
+        {
+            "level": 5,
+            "move": "Rock Throw"
+        },
+        {
+            "level": 10,
+            "move": "Mud Shot"
+        },
+        {
+            "level": 14,
+            "move": "Rock Slide"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": "Gravelord",
+    "evolution_level": 20,
+    "description": "A small rock spirit that bounds along canyons and gravel paths.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            121,
+            85,
+            72,
+            255
+        ],
+        "accent_color": [
+            184,
+            134,
+            11,
+            255
+        ],
+        "belly_color": [
+            215,
+            204,
+            200,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "single",
+        "wings": "none"
+    }
+}

@@ -1,0 +1,70 @@
+{
+    "name": "Aquasplash",
+    "types": [
+        "Water",
+        "Ice"
+    ],
+    "base_stats": {
+        "hp": 44,
+        "attack": 48,
+        "defense": 65,
+        "speed": 43
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Tail Whip"
+        },
+        {
+            "level": 3,
+            "move": "Ice Shard"
+        },
+        {
+            "level": 6,
+            "move": "Water Gun"
+        },
+        {
+            "level": 9,
+            "move": "Bubble"
+        },
+        {
+            "level": 14,
+            "move": "Water Pulse"
+        }
+    ],
+    "trait": "Torrent",
+    "evolves_from": null,
+    "evolves_into": "Seashell",
+    "evolution_level": 16,
+    "description": "A playful otter Pal. It produces icy bubbles to defend itself.",
+    "appearance": {
+        "base_shape": "aquatic",
+        "body_color": [
+            74,
+            144,
+            226,
+            255
+        ],
+        "accent_color": [
+            52,
+            152,
+            219,
+            255
+        ],
+        "belly_color": [
+            236,
+            240,
+            241,
+            255
+        ],
+        "ears": "fins",
+        "tail": "flipper",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

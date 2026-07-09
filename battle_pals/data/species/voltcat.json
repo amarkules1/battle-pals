@@ -1,0 +1,61 @@
+{
+    "name": "Voltcat",
+    "types": [
+        "Electric"
+    ],
+    "base_stats": {
+        "hp": 65,
+        "attack": 90,
+        "defense": 60,
+        "speed": 95
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 5,
+            "move": "Spark"
+        },
+        {
+            "level": 12,
+            "move": "Volt Charge"
+        },
+        {
+            "level": 18,
+            "move": "Thunderbolt"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A lightning fast cheetah Pal that crackles with electricity.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            241,
+            196,
+            15,
+            255
+        ],
+        "accent_color": [
+            44,
+            62,
+            80,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "flame",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "none"
+    }
+}

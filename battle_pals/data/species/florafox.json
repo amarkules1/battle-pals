@@ -1,0 +1,74 @@
+{
+    "name": "Florafox",
+    "types": [
+        "Grass",
+        "Wind"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 62,
+        "defense": 80,
+        "speed": 60
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 1,
+            "move": "Growl"
+        },
+        {
+            "level": 3,
+            "move": "Gust"
+        },
+        {
+            "level": 5,
+            "move": "Razor Leaf"
+        },
+        {
+            "level": 8,
+            "move": "Synthesize"
+        },
+        {
+            "level": 16,
+            "move": "Air Cutter"
+        },
+        {
+            "level": 20,
+            "move": "Leaf Blade"
+        }
+    ],
+    "trait": "Overgrow",
+    "evolves_from": "Leaflet",
+    "evolves_into": "Vinedrake",
+    "evolution_level": 32,
+    "description": "An elegant fox-like Pal adorned with blooming leaf decorations.",
+    "appearance": {
+        "base_shape": "quadruped",
+        "body_color": [
+            90,
+            180,
+            70,
+            255
+        ],
+        "accent_color": [
+            39,
+            174,
+            96,
+            255
+        ],
+        "belly_color": [
+            220,
+            240,
+            170,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "leaf",
+        "head_sprout": true,
+        "horn": "none",
+        "wings": "none"
+    }
+}

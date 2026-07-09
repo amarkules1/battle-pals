@@ -1,0 +1,61 @@
+{
+    "name": "Breezy",
+    "types": [
+        "Wind"
+    ],
+    "base_stats": {
+        "hp": 55,
+        "attack": 40,
+        "defense": 45,
+        "speed": 75
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Tackle"
+        },
+        {
+            "level": 3,
+            "move": "Gust"
+        },
+        {
+            "level": 8,
+            "move": "Tailwind"
+        },
+        {
+            "level": 12,
+            "move": "Swift"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "A cute wind sprite that drifts with seasonal drafts.",
+    "appearance": {
+        "base_shape": "blob",
+        "body_color": [
+            224,
+            242,
+            241,
+            255
+        ],
+        "accent_color": [
+            178,
+            223,
+            219,
+            255
+        ],
+        "belly_color": [
+            255,
+            255,
+            255,
+            255
+        ],
+        "ears": "none",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "none",
+        "wings": "feathered"
+    }
+}

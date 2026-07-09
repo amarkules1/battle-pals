@@ -1,0 +1,66 @@
+{
+    "name": "Darkdread",
+    "types": [
+        "Shadow",
+        "Metal"
+    ],
+    "base_stats": {
+        "hp": 75,
+        "attack": 95,
+        "defense": 85,
+        "speed": 85
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Scratch"
+        },
+        {
+            "level": 5,
+            "move": "Bite"
+        },
+        {
+            "level": 12,
+            "move": "Bullet Punch"
+        },
+        {
+            "level": 18,
+            "move": "Shadow Claw"
+        },
+        {
+            "level": 26,
+            "move": "Dark Pulse"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "An armored predator with razor-sharp metal claws and bat wings.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            30,
+            30,
+            36,
+            255
+        ],
+        "accent_color": [
+            220,
+            20,
+            60,
+            255
+        ],
+        "belly_color": [
+            100,
+            100,
+            110,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "spikes",
+        "head_sprout": false,
+        "horn": "dual",
+        "wings": "bat"
+    }
+}

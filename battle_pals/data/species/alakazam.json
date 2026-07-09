@@ -1,0 +1,66 @@
+{
+    "name": "Alakazam",
+    "types": [
+        "Mind",
+        "Light"
+    ],
+    "base_stats": {
+        "hp": 60,
+        "attack": 90,
+        "defense": 55,
+        "speed": 110
+    },
+    "learnset": [
+        {
+            "level": 1,
+            "move": "Confusion"
+        },
+        {
+            "level": 5,
+            "move": "Flash"
+        },
+        {
+            "level": 12,
+            "move": "Psybeam"
+        },
+        {
+            "level": 20,
+            "move": "Psychic"
+        },
+        {
+            "level": 30,
+            "move": "Future Sight"
+        }
+    ],
+    "trait": "Clear Body",
+    "evolves_from": null,
+    "evolves_into": null,
+    "evolution_level": null,
+    "description": "Its brain cells grow infinitely, giving it godlike memory.",
+    "appearance": {
+        "base_shape": "biped",
+        "body_color": [
+            241,
+            196,
+            15,
+            255
+        ],
+        "accent_color": [
+            253,
+            254,
+            220,
+            255
+        ],
+        "belly_color": [
+            245,
+            222,
+            179,
+            255
+        ],
+        "ears": "pointy",
+        "tail": "fluffy",
+        "head_sprout": false,
+        "horn": "dual",
+        "wings": "none"
+    }
+}
