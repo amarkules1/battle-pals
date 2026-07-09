@@ -543,13 +543,17 @@ class Pal:
                 stat = effect["stat"]
                 multiplier = effect["mult"]
                 
-                if stat in target.stat_modifiers:
-                    if multiplier < 1.0 and target.species.trait == "Clear Body":
-                        logs.append(f"{target.name}'s Clear Body prevents stat reduction!")
+                # If multiplier > 1.0, it's a buff targeting the user (self)
+                # If multiplier < 1.0, it's a debuff targeting the opponent (target)
+                recipient = self if multiplier > 1.0 else target
+                
+                if stat in recipient.stat_modifiers:
+                    if multiplier < 1.0 and recipient.species.trait == "Clear Body":
+                        logs.append(f"{recipient.name}'s Clear Body prevents stat reduction!")
                     else:
-                        target.stat_modifiers[stat] = max(0.4, target.stat_modifiers[stat] * multiplier)
+                        recipient.stat_modifiers[stat] = max(0.4, min(2.0, recipient.stat_modifiers[stat] * multiplier))
                         change_text = "fell" if multiplier < 1.0 else "rose"
-                        logs.append(f"{target.name}'s {stat.capitalize()} {change_text}!")
+                        logs.append(f"{recipient.name}'s {stat.capitalize()} {change_text}!")
                 
         return logs
 

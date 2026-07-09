@@ -86,6 +86,28 @@ def run_tests():
         print("FAIL: Clear Body did not protect target defense stat.")
         sys.exit(1)
         
+    # 5. Verify status move targeting (Buff targets self, Debuff targets opponent)
+    agility = Move(name="Agility", pal_type="Normal", power=0, accuracy=1.0, category="Status", effect={"stat": "speed", "mult": 1.5})
+    p1.reset_battle_stats()
+    p2.reset_battle_stats()
+    
+    logs_buf = p1.use_move(agility, p2)
+    print(f"Buff logs: {logs_buf}")
+    if p1.stat_modifiers["speed"] == 1.5 and p2.stat_modifiers["speed"] == 1.0:
+        print("PASS: Buff move correctly targeted self.")
+    else:
+        print(f"FAIL: Buff move targeted wrong specimen. p1 speed: {p1.stat_modifiers['speed']}, p2 speed: {p2.stat_modifiers['speed']}")
+        sys.exit(1)
+        
+    growl = Move(name="Growl", pal_type="Normal", power=0, accuracy=1.0, category="Status", effect={"stat": "attack", "mult": 0.8})
+    logs_debuf = p1.use_move(growl, p2)
+    print(f"Debuff logs: {logs_debuf}")
+    if p2.stat_modifiers["attack"] == 0.8 and p1.stat_modifiers["attack"] == 1.0:
+        print("PASS: Debuff move correctly targeted opponent.")
+    else:
+        print(f"FAIL: Debuff move targeted wrong specimen. p1 atk: {p1.stat_modifiers['attack']}, p2 atk: {p2.stat_modifiers['attack']}")
+        sys.exit(1)
+        
     print("\nAll Species & Specimen tests passed successfully!")
     sys.exit(0)
 
