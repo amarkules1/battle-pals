@@ -1,0 +1,8 @@
+{
+    "name": "Luster Purge",
+    "type": "Light",
+    "power": 70,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Fires a purging blast of light."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Pound Heavy",
+    "type": "Normal",
+    "power": 70,
+    "accuracy": 0.9,
+    "category": "Physical",
+    "description": "Pounds target with massive weight."
+}

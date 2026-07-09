@@ -1,0 +1,8 @@
+{
+    "name": "Electro Ball",
+    "type": "Electric",
+    "power": 60,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Hurls a ball of electricity."
+}

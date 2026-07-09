@@ -1,0 +1,8 @@
+{
+    "name": "Discharge",
+    "type": "Electric",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Discharges electricity to all nearby."
+}

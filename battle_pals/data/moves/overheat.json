@@ -1,0 +1,8 @@
+{
+    "name": "Overheat",
+    "type": "Fire",
+    "power": 130,
+    "accuracy": 0.9,
+    "category": "Special",
+    "description": "Releases full fire potential."
+}

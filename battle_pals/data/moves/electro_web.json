@@ -1,0 +1,8 @@
+{
+    "name": "Electro Web",
+    "type": "Electric",
+    "power": 55,
+    "accuracy": 0.95,
+    "category": "Special",
+    "description": "Traps target in an electric web."
+}

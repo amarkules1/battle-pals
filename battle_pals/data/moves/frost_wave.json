@@ -1,0 +1,12 @@
+{
+    "name": "Frost Wave",
+    "type": "Ice",
+    "power": 45,
+    "accuracy": 1.0,
+    "category": "Special",
+    "effect": {
+        "stat": "speed",
+        "mult": 0.8
+    },
+    "description": "Cold frost wave that slows target."
+}

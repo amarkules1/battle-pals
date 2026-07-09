@@ -1,0 +1,8 @@
+{
+    "name": "Thunder Shock",
+    "type": "Electric",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Jolts target with electricity."
+}

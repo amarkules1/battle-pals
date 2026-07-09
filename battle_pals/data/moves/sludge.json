@@ -1,0 +1,8 @@
+{
+    "name": "Sludge",
+    "type": "Toxic",
+    "power": 65,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Throws toxic sludge at target."
+}

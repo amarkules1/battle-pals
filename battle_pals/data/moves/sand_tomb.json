@@ -1,0 +1,8 @@
+{
+    "name": "Sand Tomb",
+    "type": "Earth",
+    "power": 35,
+    "accuracy": 0.85,
+    "category": "Physical",
+    "description": "Traps target in a quicksand tomb."
+}

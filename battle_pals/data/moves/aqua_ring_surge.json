@@ -1,0 +1,11 @@
+{
+    "name": "Aqua Ring Surge",
+    "type": "Water",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "heal": 0.25
+    },
+    "description": "Aqua ring heals user significantly."
+}

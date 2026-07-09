@@ -1,0 +1,8 @@
+{
+    "name": "Sheer Cold",
+    "type": "Ice",
+    "power": 150,
+    "accuracy": 0.3,
+    "category": "Special",
+    "description": "Absolute zero cold blast."
+}

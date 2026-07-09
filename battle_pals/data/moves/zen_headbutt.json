@@ -1,0 +1,8 @@
+{
+    "name": "Zen Headbutt",
+    "type": "Mind",
+    "power": 80,
+    "accuracy": 0.9,
+    "category": "Physical",
+    "description": "Focuses Zen energy in a headbutt."
+}

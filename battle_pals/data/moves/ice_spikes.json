@@ -1,0 +1,8 @@
+{
+    "name": "Ice Spikes",
+    "type": "Ice",
+    "power": 60,
+    "accuracy": 0.95,
+    "category": "Physical",
+    "description": "Throws sharp ice spikes."
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Sing",
+    "type": "Normal",
+    "power": 0,
+    "accuracy": 0.55,
+    "category": "Status",
+    "effect": {
+        "stat": "speed",
+        "mult": 0.5
+    },
+    "description": "Sings to put target to sleep (slows down)."
+}

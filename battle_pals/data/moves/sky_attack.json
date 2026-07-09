@@ -1,0 +1,8 @@
+{
+    "name": "Sky Attack",
+    "type": "Wind",
+    "power": 140,
+    "accuracy": 0.9,
+    "category": "Physical",
+    "description": "A high-power dive bomb attack."
+}

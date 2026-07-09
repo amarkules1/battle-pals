@@ -1,0 +1,11 @@
+{
+    "name": "Aqua Ring",
+    "type": "Water",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "heal": 0.1
+    },
+    "description": "Envelops user in water to heal."
+}

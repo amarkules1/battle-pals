@@ -1,0 +1,8 @@
+{
+    "name": "Fire Spin",
+    "type": "Fire",
+    "power": 35,
+    "accuracy": 0.85,
+    "category": "Special",
+    "description": "Traps the target in fire."
+}

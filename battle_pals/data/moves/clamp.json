@@ -1,0 +1,8 @@
+{
+    "name": "Clamp",
+    "type": "Water",
+    "power": 35,
+    "accuracy": 0.85,
+    "category": "Physical",
+    "description": "Clamps the target with shells."
+}

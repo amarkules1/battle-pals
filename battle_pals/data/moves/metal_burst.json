@@ -1,0 +1,8 @@
+{
+    "name": "Metal Burst",
+    "type": "Metal",
+    "power": 100,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Releases metallic shards on contact."
+}

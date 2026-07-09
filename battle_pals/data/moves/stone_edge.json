@@ -1,0 +1,8 @@
+{
+    "name": "Stone Edge",
+    "type": "Earth",
+    "power": 100,
+    "accuracy": 0.8,
+    "category": "Physical",
+    "description": "Stabs target with sharp stones."
+}

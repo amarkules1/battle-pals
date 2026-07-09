@@ -1,0 +1,12 @@
+{
+    "name": "Disable",
+    "type": "Normal",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "speed",
+        "mult": 0.8
+    },
+    "description": "Slows target down by disabling them."
+}

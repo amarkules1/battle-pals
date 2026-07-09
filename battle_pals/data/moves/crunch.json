@@ -1,0 +1,8 @@
+{
+    "name": "Crunch",
+    "type": "Shadow",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Crunches target with dark power."
+}

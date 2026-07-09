@@ -1,0 +1,8 @@
+{
+    "name": "Bite",
+    "type": "Shadow",
+    "power": 60,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Bites target with shadow energy."
+}

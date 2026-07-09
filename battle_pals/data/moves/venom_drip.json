@@ -1,0 +1,12 @@
+{
+    "name": "Venom Drip",
+    "type": "Toxic",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Special",
+    "effect": {
+        "stat": "defense",
+        "mult": 0.8
+    },
+    "description": "Venom drips on target, corroding defense."
+}

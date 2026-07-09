@@ -1,0 +1,8 @@
+{
+    "name": "Icicle Crash",
+    "type": "Ice",
+    "power": 85,
+    "accuracy": 0.9,
+    "category": "Physical",
+    "description": "Crashes large icicles from above."
+}

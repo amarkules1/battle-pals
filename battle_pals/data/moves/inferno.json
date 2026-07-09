@@ -1,0 +1,8 @@
+{
+    "name": "Inferno",
+    "type": "Fire",
+    "power": 100,
+    "accuracy": 0.5,
+    "category": "Special",
+    "description": "Engulfs target in intense flame."
+}

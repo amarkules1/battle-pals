@@ -1,0 +1,12 @@
+{
+    "name": "Flame Charge",
+    "type": "Fire",
+    "power": 50,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "effect": {
+        "stat": "speed",
+        "mult": 1.2
+    },
+    "description": "Tackles target, boosting user speed."
+}

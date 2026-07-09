@@ -1,0 +1,8 @@
+{
+    "name": "Gear Grind",
+    "type": "Metal",
+    "power": 50,
+    "accuracy": 0.85,
+    "category": "Physical",
+    "description": "Grinds target with steel gears."
+}

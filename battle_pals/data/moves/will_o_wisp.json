@@ -1,0 +1,12 @@
+{
+    "name": "Will-O-Wisp",
+    "type": "Fire",
+    "power": 0,
+    "accuracy": 0.85,
+    "category": "Status",
+    "effect": {
+        "stat": "attack",
+        "mult": 0.5
+    },
+    "description": "Inflicts burn, cutting enemy attack in half."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Pound",
+    "type": "Normal",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Pounds target with limbs."
+}

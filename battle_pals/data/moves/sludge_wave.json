@@ -1,0 +1,8 @@
+{
+    "name": "Sludge Wave",
+    "type": "Toxic",
+    "power": 95,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Swamps target in a toxic wave."
+}

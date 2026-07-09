@@ -1,0 +1,8 @@
+{
+    "name": "Fury Attack",
+    "type": "Normal",
+    "power": 15,
+    "accuracy": 0.85,
+    "category": "Physical",
+    "description": "Repeatedly jabs target."
+}

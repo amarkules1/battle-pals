@@ -1,0 +1,12 @@
+{
+    "name": "Defog",
+    "type": "Wind",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "defense",
+        "mult": 0.8
+    },
+    "description": "Blows wind to blow away defense barriers."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Heavy Slam",
+    "type": "Metal",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Slams target with a heavy body."
+}

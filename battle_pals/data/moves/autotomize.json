@@ -1,0 +1,12 @@
+{
+    "name": "Autotomize",
+    "type": "Metal",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "speed",
+        "mult": 1.5
+    },
+    "description": "Sheds weight to boost Speed."
+}

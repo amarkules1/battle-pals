@@ -1,0 +1,11 @@
+{
+    "name": "Leech Seed",
+    "type": "Grass",
+    "power": 0,
+    "accuracy": 0.9,
+    "category": "Status",
+    "effect": {
+        "heal": 0.15
+    },
+    "description": "Steals target's HP to heal user."
+}

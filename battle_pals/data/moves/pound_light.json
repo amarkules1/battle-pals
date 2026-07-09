@@ -1,0 +1,8 @@
+{
+    "name": "Pound Light",
+    "type": "Normal",
+    "power": 30,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Quick slap with light weight."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Future Sight",
+    "type": "Mind",
+    "power": 120,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Calculates future vectors to hit."
+}

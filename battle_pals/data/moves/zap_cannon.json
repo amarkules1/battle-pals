@@ -1,0 +1,8 @@
+{
+    "name": "Zap Cannon",
+    "type": "Electric",
+    "power": 120,
+    "accuracy": 0.5,
+    "category": "Special",
+    "description": "Blasts a huge electric cannonball."
+}

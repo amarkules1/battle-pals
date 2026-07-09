@@ -1,0 +1,8 @@
+{
+    "name": "Cut",
+    "type": "Normal",
+    "power": 50,
+    "accuracy": 0.95,
+    "category": "Physical",
+    "description": "Cuts the target with claws or blades."
+}

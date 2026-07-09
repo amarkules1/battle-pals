@@ -1,0 +1,11 @@
+{
+    "name": "Mega Drain Blast",
+    "type": "Grass",
+    "power": 60,
+    "accuracy": 1.0,
+    "category": "Special",
+    "effect": {
+        "heal": 0.3
+    },
+    "description": "Drains target energy."
+}

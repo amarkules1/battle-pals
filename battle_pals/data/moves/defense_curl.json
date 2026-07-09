@@ -1,0 +1,12 @@
+{
+    "name": "Defense Curl",
+    "type": "Normal",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "defense",
+        "mult": 1.2
+    },
+    "description": "Curls up to conceal weak spots."
+}

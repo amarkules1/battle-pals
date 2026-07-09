@@ -1,0 +1,8 @@
+{
+    "name": "Freeze-Dry",
+    "type": "Ice",
+    "power": 70,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Freezes target instantly."
+}

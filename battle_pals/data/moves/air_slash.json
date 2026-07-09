@@ -1,0 +1,8 @@
+{
+    "name": "Air Slash",
+    "type": "Wind",
+    "power": 75,
+    "accuracy": 0.95,
+    "category": "Special",
+    "description": "Slashes target with air currents."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Lava Plume",
+    "type": "Fire",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Scarlet flames torch everything."
+}

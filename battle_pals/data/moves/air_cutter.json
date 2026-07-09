@@ -1,0 +1,8 @@
+{
+    "name": "Air Cutter",
+    "type": "Wind",
+    "power": 60,
+    "accuracy": 0.95,
+    "category": "Special",
+    "description": "Slashes target with wind blades."
+}

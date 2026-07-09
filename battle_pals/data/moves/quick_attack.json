@@ -1,0 +1,8 @@
+{
+    "name": "Quick Attack",
+    "type": "Normal",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "An extremely fast attack."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Mega Punch",
+    "type": "Normal",
+    "power": 80,
+    "accuracy": 0.85,
+    "category": "Physical",
+    "description": "A hard punch packed with power."
+}

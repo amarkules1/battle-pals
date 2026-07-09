@@ -1,0 +1,8 @@
+{
+    "name": "Whirlpool",
+    "type": "Water",
+    "power": 35,
+    "accuracy": 0.85,
+    "category": "Special",
+    "description": "Traps the target in a whirlpool."
+}

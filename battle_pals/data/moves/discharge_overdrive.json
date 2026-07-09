@@ -1,0 +1,8 @@
+{
+    "name": "Discharge Overdrive",
+    "type": "Electric",
+    "power": 95,
+    "accuracy": 0.9,
+    "category": "Special",
+    "description": "A full electric discharge."
+}

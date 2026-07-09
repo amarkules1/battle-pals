@@ -1,0 +1,8 @@
+{
+    "name": "Ice Punch",
+    "type": "Ice",
+    "power": 75,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "An icy cold punch."
+}

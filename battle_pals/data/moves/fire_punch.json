@@ -1,0 +1,8 @@
+{
+    "name": "Fire Punch",
+    "type": "Fire",
+    "power": 75,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "An explosive fiery punch."
+}

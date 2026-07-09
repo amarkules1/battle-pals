@@ -1,0 +1,12 @@
+{
+    "name": "Volt Charge",
+    "type": "Electric",
+    "power": 50,
+    "accuracy": 1.0,
+    "category": "Special",
+    "effect": {
+        "stat": "speed",
+        "mult": 1.2
+    },
+    "description": "Shoots electric bolt, boosting speed."
+}

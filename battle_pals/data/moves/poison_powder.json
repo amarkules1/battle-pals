@@ -1,0 +1,12 @@
+{
+    "name": "Poison Powder",
+    "type": "Toxic",
+    "power": 0,
+    "accuracy": 0.75,
+    "category": "Status",
+    "effect": {
+        "stat": "attack",
+        "mult": 0.8
+    },
+    "description": "Weakens target with toxic powder."
+}

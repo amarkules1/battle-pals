@@ -1,0 +1,8 @@
+{
+    "name": "Air Blast",
+    "type": "Wind",
+    "power": 80,
+    "accuracy": 0.95,
+    "category": "Special",
+    "description": "Fires air blasts."
+}

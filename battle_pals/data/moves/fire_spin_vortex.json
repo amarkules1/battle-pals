@@ -1,0 +1,8 @@
+{
+    "name": "Fire Spin Vortex",
+    "type": "Fire",
+    "power": 50,
+    "accuracy": 0.9,
+    "category": "Special",
+    "description": "Traps target in a fire vortex."
+}

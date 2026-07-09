@@ -1,0 +1,8 @@
+{
+    "name": "Bulldoze",
+    "type": "Earth",
+    "power": 60,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Bulldozes the ground to hit."
+}

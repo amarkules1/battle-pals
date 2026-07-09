@@ -1,0 +1,11 @@
+{
+    "name": "Giga Drain",
+    "type": "Grass",
+    "power": 75,
+    "accuracy": 1.0,
+    "category": "Special",
+    "effect": {
+        "heal": 0.4
+    },
+    "description": "Drains HP from the target."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Seed Bomb",
+    "type": "Grass",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Hurls hard seed bombs."
+}

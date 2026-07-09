@@ -1,0 +1,8 @@
+{
+    "name": "Muddy Water",
+    "type": "Water",
+    "power": 90,
+    "accuracy": 0.85,
+    "category": "Special",
+    "description": "Sprays muddy water to blind."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Stone Blast",
+    "type": "Earth",
+    "power": 70,
+    "accuracy": 0.9,
+    "category": "Special",
+    "description": "Launches stone blasts."
+}

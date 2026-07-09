@@ -1,0 +1,8 @@
+{
+    "name": "Icicle Spear",
+    "type": "Ice",
+    "power": 25,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Fires icicle spears in succession."
+}

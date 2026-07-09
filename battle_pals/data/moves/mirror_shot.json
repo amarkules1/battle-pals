@@ -1,0 +1,8 @@
+{
+    "name": "Mirror Shot",
+    "type": "Light",
+    "power": 60,
+    "accuracy": 0.85,
+    "category": "Special",
+    "description": "Reflects light flash to damage."
+}

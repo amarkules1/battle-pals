@@ -1,0 +1,8 @@
+{
+    "name": "Mud Shot",
+    "type": "Earth",
+    "power": 55,
+    "accuracy": 0.95,
+    "category": "Special",
+    "description": "Shoots mud to slow speed."
+}

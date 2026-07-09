@@ -1,0 +1,12 @@
+{
+    "name": "Tail Glow",
+    "type": "Light",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "attack",
+        "mult": 1.5
+    },
+    "description": "Glows tail brightly, boosting Attack."
+}

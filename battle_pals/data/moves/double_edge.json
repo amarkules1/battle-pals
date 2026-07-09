@@ -1,0 +1,8 @@
+{
+    "name": "Double-Edge",
+    "type": "Normal",
+    "power": 120,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "A life-risking tackle."
+}

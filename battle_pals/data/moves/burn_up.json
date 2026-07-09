@@ -1,0 +1,8 @@
+{
+    "name": "Burn Up",
+    "type": "Fire",
+    "power": 130,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Burns out the user's fire power."
+}

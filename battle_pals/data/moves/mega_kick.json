@@ -1,0 +1,8 @@
+{
+    "name": "Mega Kick",
+    "type": "Normal",
+    "power": 120,
+    "accuracy": 0.75,
+    "category": "Physical",
+    "description": "A high-power kick."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Rock Slide",
+    "type": "Earth",
+    "power": 75,
+    "accuracy": 0.9,
+    "category": "Physical",
+    "description": "Slides large rocks onto target."
+}
