@@ -1,0 +1,8 @@
+{
+    "name": "Flash Cannon",
+    "type": "Metal",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Fires a burst of metallic light energy."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Water Pulse",
+    "type": "Water",
+    "power": 60,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "A clean, pulsing water blast."
+}

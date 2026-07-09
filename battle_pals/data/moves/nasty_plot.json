@@ -1,0 +1,12 @@
+{
+    "name": "Nasty Plot",
+    "type": "Shadow",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "attack",
+        "mult": 1.5
+    },
+    "description": "Plots in the shadows, boosting Attack."
+}

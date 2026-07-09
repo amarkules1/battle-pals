@@ -1,0 +1,12 @@
+{
+    "name": "Thunder Wave",
+    "type": "Electric",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "speed",
+        "mult": 0.5
+    },
+    "description": "Sends shock waves, cutting target's Speed."
+}

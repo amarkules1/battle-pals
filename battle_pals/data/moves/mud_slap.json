@@ -1,0 +1,8 @@
+{
+    "name": "Mud Slap",
+    "type": "Earth",
+    "power": 20,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Hurls mud to blind and damage target."
+}

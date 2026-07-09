@@ -1,0 +1,8 @@
+{
+    "name": "Double Slap",
+    "type": "Normal",
+    "power": 15,
+    "accuracy": 0.85,
+    "category": "Physical",
+    "description": "Repeatedly slaps the target."
+}

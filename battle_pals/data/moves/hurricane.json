@@ -1,0 +1,8 @@
+{
+    "name": "Hurricane",
+    "type": "Wind",
+    "power": 110,
+    "accuracy": 0.7,
+    "category": "Special",
+    "description": "Traps target in a violent hurricane."
+}

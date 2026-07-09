@@ -1,0 +1,8 @@
+{
+    "name": "Hyper Beam",
+    "type": "Normal",
+    "power": 120,
+    "accuracy": 0.9,
+    "category": "Special",
+    "description": "A high-power energy beam."
+}

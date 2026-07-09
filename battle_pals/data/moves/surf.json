@@ -1,0 +1,8 @@
+{
+    "name": "Surf",
+    "type": "Water",
+    "power": 90,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Swamps the target with a huge wave."
+}

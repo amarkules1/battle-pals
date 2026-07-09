@@ -1,0 +1,8 @@
+{
+    "name": "Flame Wheel",
+    "type": "Fire",
+    "power": 60,
+    "accuracy": 0.95,
+    "category": "Physical",
+    "description": "Launches a spinning wheel of fire."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Judgment",
+    "type": "Light",
+    "power": 100,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Fires light beams from the heavens."
+}

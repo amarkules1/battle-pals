@@ -1,0 +1,8 @@
+{
+    "name": "Hydro Pump",
+    "type": "Water",
+    "power": 110,
+    "accuracy": 0.8,
+    "category": "Special",
+    "description": "Blasts high-pressure water."
+}

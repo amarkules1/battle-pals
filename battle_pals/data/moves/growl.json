@@ -1,0 +1,12 @@
+{
+    "name": "Growl",
+    "type": "Normal",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "attack",
+        "mult": 0.8
+    },
+    "description": "Intimidates the target, lowering their Attack."
+}

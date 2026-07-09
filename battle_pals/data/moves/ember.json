@@ -1,0 +1,8 @@
+{
+    "name": "Ember",
+    "type": "Fire",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Shoots tiny flames at the target."
+}

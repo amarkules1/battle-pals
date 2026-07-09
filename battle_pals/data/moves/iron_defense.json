@@ -1,0 +1,12 @@
+{
+    "name": "Iron Defense",
+    "type": "Metal",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "defense",
+        "mult": 1.5
+    },
+    "description": "Hardens skin like iron, boosting Defense."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Blizzard",
+    "type": "Ice",
+    "power": 110,
+    "accuracy": 0.7,
+    "category": "Special",
+    "description": "Creates a huge freezing blizzard storm."
+}

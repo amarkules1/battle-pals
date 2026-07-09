@@ -1,0 +1,12 @@
+{
+    "name": "Toxic",
+    "type": "Toxic",
+    "power": 0,
+    "accuracy": 0.9,
+    "category": "Status",
+    "effect": {
+        "stat": "defense",
+        "mult": 0.7
+    },
+    "description": "Infects target, corroding their Defense."
+}

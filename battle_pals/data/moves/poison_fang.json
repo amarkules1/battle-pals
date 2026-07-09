@@ -1,0 +1,8 @@
+{
+    "name": "Poison Fang",
+    "type": "Toxic",
+    "power": 50,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Bites target with toxic fangs."
+}

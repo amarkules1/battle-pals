@@ -1,0 +1,8 @@
+{
+    "name": "Slam",
+    "type": "Normal",
+    "power": 80,
+    "accuracy": 0.75,
+    "category": "Physical",
+    "description": "Slams the target with a heavy tail or limb."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Ice Beam",
+    "type": "Ice",
+    "power": 90,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Fires an icy beam to freeze the target."
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Vine Whip",
+    "type": "Grass",
+    "power": 45,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Strikes the target with slender vines."
+}

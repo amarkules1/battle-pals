@@ -1,0 +1,8 @@
+{
+    "name": "Scratch",
+    "type": "Normal",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Scratches the enemy with sharp claws."
+}

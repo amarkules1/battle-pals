@@ -1,0 +1,8 @@
+{
+    "name": "Shadow Claw",
+    "type": "Shadow",
+    "power": 70,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Strikes target with dark shadow claws."
+}

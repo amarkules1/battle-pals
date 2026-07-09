@@ -1,0 +1,8 @@
+{
+    "name": "Solar Flare",
+    "type": "Light",
+    "power": 80,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Blasts target with a burst of solar light."
+}

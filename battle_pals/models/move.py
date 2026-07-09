@@ -1,112 +1,49 @@
+import os
+import json
+
 class Move:
     def __init__(self, name, pal_type, power, accuracy, category="Physical", effect=None, description=""):
         self.name = name
-        self.type = pal_type  # "Fire", "Water", "Grass", "Normal"
+        self.type = pal_type  # "Fire", "Water", "Grass", "Normal", etc.
         self.power = power
         self.accuracy = accuracy  # Float between 0.0 and 1.0
         self.category = category  # "Physical", "Special", "Status"
         self.effect = effect  # Optional dict for status effects, e.g., {"heal": 0.5} or {"stat": "attack", "mult": 0.8}
         self.description = description
 
-# Static definitions of Starter moves
-MOVES = {
-    # Normal moves
-    "Tackle": Move(
-        name="Tackle",
-        pal_type="Normal",
-        power=40,
-        accuracy=1.0,
-        description="A physical body charge attack."
-    ),
-    "Scratch": Move(
-        name="Scratch",
-        pal_type="Normal",
-        power=40,
-        accuracy=1.0,
-        description="Scratches the enemy with sharp claws."
-    ),
-    # Wind moves
-    "Gust": Move(
-        name="Gust",
-        pal_type="Wind",
-        power=40,
-        accuracy=1.0,
-        description="Creates a strong gust of wind."
-    ),
+    @classmethod
+    def from_json(cls, data):
+        return cls(
+            name=data["name"],
+            pal_type=data["type"],
+            power=data["power"],
+            accuracy=data.get("accuracy", 1.0),
+            category=data.get("category", "Physical"),
+            effect=data.get("effect"),
+            description=data.get("description", "")
+        )
 
-    # Ice moves
-    "Ice Shard": Move(
-        name="Ice Shard",
-        pal_type="Ice",
-        power=40,
-        accuracy=1.0,
-        description="Fires frozen ice shards at high speed."
-    ),
-    # Grass moves
-    "Razor Leaf": Move(
-        name="Razor Leaf",
-        pal_type="Grass",
-        power=55,
-        accuracy=0.95,
-        description="Launches sharp-edged leaves at the target."
-    ),
-    "Synthesize": Move(
-        name="Synthesize",
-        pal_type="Grass",
-        power=0,
-        accuracy=1.0,
-        category="Status",
-        effect={"heal": 0.5},
-        description="Heals 50% of the user's max HP."
-    ),
+# Global moves repository dictionary
+MOVES = {}
 
-    # Fire moves
-    "Ember": Move(
-        name="Ember",
-        pal_type="Fire",
-        power=40,
-        accuracy=1.0,
-        description="Shoots tiny flames at the target."
-    ),
-    "Flame Wheel": Move(
-        name="Flame Wheel",
-        pal_type="Fire",
-        power=60,
-        accuracy=0.90,
-        description="Launches a spinning ball of fire."
-    ),
-    "Growl": Move(
-        name="Growl",
-        pal_type="Normal",
-        power=0,
-        accuracy=1.0,
-        category="Status",
-        effect={"stat": "attack", "mult": 0.8},
-        description="Intimidates the enemy, reducing their Attack power."
-    ),
+def load_moves():
+    global MOVES
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    moves_dir = os.path.join(current_dir, "..", "data", "moves")
+    
+    if os.path.exists(moves_dir):
+        for filename in os.listdir(moves_dir):
+            if filename.endswith(".json"):
+                filepath = os.path.join(moves_dir, filename)
+                try:
+                    with open(filepath, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        move = Move.from_json(data)
+                        MOVES[move.name] = move
+                except Exception as e:
+                    print(f"Error loading move {filename}: {e}")
+    else:
+        print(f"Moves directory not found at {moves_dir}")
 
-    # Water moves
-    "Water Gun": Move(
-        name="Water Gun",
-        pal_type="Water",
-        power=40,
-        accuracy=1.0,
-        description="Blasts water at the target."
-    ),
-    "Water Pulse": Move(
-        name="Water Pulse",
-        pal_type="Water",
-        power=60,
-        accuracy=1.0,
-        description="A clean, pulsing water blast."
-    ),
-    "Tail Whip": Move(
-        name="Tail Whip",
-        pal_type="Normal",
-        power=0,
-        accuracy=1.0,
-        category="Status",
-        effect={"stat": "defense", "mult": 0.8},
-        description="Wags tail cutely, reducing the target's Defense."
-    ),
-}
+# Load all moves dynamically at module import time
+load_moves()

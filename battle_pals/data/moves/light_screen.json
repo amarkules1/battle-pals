@@ -1,0 +1,12 @@
+{
+    "name": "Light Screen",
+    "type": "Light",
+    "power": 0,
+    "accuracy": 1.0,
+    "category": "Status",
+    "effect": {
+        "stat": "defense",
+        "mult": 1.4
+    },
+    "description": "Creates a light barrier, boosting Defense."
+}

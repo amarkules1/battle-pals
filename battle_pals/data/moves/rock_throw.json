@@ -1,0 +1,8 @@
+{
+    "name": "Rock Throw",
+    "type": "Earth",
+    "power": 50,
+    "accuracy": 0.9,
+    "category": "Physical",
+    "description": "Throws small stones at the target."
+}

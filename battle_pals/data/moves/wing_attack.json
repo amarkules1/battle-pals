@@ -1,0 +1,8 @@
+{
+    "name": "Wing Attack",
+    "type": "Wind",
+    "power": 60,
+    "accuracy": 1.0,
+    "category": "Physical",
+    "description": "Strikes target with wings."
+}

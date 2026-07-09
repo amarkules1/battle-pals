@@ -1,0 +1,8 @@
+{
+    "name": "Acid",
+    "type": "Toxic",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Sprays melting acid at target."
+}

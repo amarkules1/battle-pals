@@ -1,0 +1,8 @@
+{
+    "name": "Frost Breath",
+    "type": "Ice",
+    "power": 60,
+    "accuracy": 0.9,
+    "category": "Special",
+    "description": "Blows a cold icy breath."
+}

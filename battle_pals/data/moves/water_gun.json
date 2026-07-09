@@ -1,0 +1,8 @@
+{
+    "name": "Water Gun",
+    "type": "Water",
+    "power": 40,
+    "accuracy": 1.0,
+    "category": "Special",
+    "description": "Blasts water at the target."
+}

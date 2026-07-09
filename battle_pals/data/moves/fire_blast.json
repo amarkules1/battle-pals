@@ -1,0 +1,8 @@
+{
+    "name": "Fire Blast",
+    "type": "Fire",
+    "power": 110,
+    "accuracy": 0.85,
+    "category": "Special",
+    "description": "An explosive star of fire."
+}

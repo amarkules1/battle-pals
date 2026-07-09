@@ -1,0 +1,8 @@
+{
+    "name": "Thunder",
+    "type": "Electric",
+    "power": 110,
+    "accuracy": 0.7,
+    "category": "Special",
+    "description": "Strikes down a lightning bolt."
+}
