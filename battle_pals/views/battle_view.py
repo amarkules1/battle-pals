@@ -79,6 +79,7 @@ class BattleView:
         self.current_log = ""
         
         self.move_buttons = []
+        self.turn_order = []  # Tracks actions in the current combat round
         
         # Timers
         self.blink_timer = 0.0
@@ -122,6 +123,7 @@ class BattleView:
         else:
             # Check for faint conditions
             if self.player.hp <= 0 or self.opponent.hp <= 0:
+                self.turn_order = []  # Clear pending attacks if battle ends
                 if self.player.hp <= 0 and not self.player.is_fainted:
                     self.player.faint_timer = 0.01
                     self.log_queue.append(f"{self.player.name} fainted!")
@@ -139,6 +141,16 @@ class BattleView:
                     BattlePalsGame.get_instance().switch_to_view(
                         GameOverView(victory=victory, player_pal=self.player, opponent_pal=self.opponent)
                     )
+            elif self.turn_order:
+                # Process the second attacker's turn
+                attacker, move, defender = self.turn_order.pop(0)
+                if attacker.hp > 0:
+                    logs = attacker.use_move(move, defender)
+                    self.log_queue.extend(logs)
+                    self.advance_log()
+                else:
+                    # Attacker fainted during the first turn, proceed to check end of round
+                    self.advance_log()
             else:
                 # Return to move selection
                 self.state = STATE_MOVE_SELECT
@@ -155,25 +167,20 @@ class BattleView:
         player_first = self.player.speed >= self.opponent.speed
         
         if player_first:
-            # 1. Player attacks
-            p_logs = self.player.use_move(player_move, self.opponent)
-            self.log_queue.extend(p_logs)
-            
-            # Check if opponent fainted
-            if self.opponent.hp > 0:
-                o_logs = self.opponent.use_move(opponent_move, self.player)
-                self.log_queue.extend(o_logs)
+            self.turn_order = [
+                (self.player, player_move, self.opponent),
+                (self.opponent, opponent_move, self.player)
+            ]
         else:
-            # 1. Opponent attacks
-            o_logs = self.opponent.use_move(opponent_move, self.player)
-            self.log_queue.extend(o_logs)
-            
-            # Check if player fainted
-            if self.player.hp > 0:
-                p_logs = self.player.use_move(player_move, self.opponent)
-                self.log_queue.extend(p_logs)
+            self.turn_order = [
+                (self.opponent, opponent_move, self.player),
+                (self.player, player_move, self.opponent)
+            ]
 
-        # Start printing log sequence
+        # Execute the first attacker's turn
+        attacker, move, defender = self.turn_order.pop(0)
+        logs = attacker.use_move(move, defender)
+        self.log_queue.extend(logs)
         self.advance_log()
 
     def on_update(self, dt):
