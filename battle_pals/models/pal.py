@@ -73,6 +73,7 @@ class Pal:
         self.type = species.types[0] if species.types else "Normal"
         self.level = level
         self.is_player = is_player
+        self.experience = 0
 
         # Set up stat variations (IVs: 0-15)
         if stat_variations is None:
@@ -161,9 +162,17 @@ class Pal:
             mult *= 1.5
         return int(self.base_speed * mult)
 
-    def reset_battle_stats(self):
-        """Resets battle stats (HP remains unchanged, but modifiers are reset)."""
-        self.hp = self.max_hp
+    def reset_battle_stats(self, heal=False):
+        """Resets battle modifiers. If heal=True, restores HP to full."""
+        if heal:
+            self.hp = self.max_hp
+            self.is_fainted = False
+            self.faint_timer = 0.0
+        elif self.hp <= 0:
+            self.is_fainted = True
+        else:
+            self.is_fainted = False
+
         self.stat_modifiers = {
             "attack": 1.0,
             "defense": 1.0,
@@ -172,10 +181,77 @@ class Pal:
         self.shake_timer = 0.0
         self.flash_timer = 0.0
         self.attack_timer = 0.0
-        self.faint_timer = 0.0
-        self.is_fainted = False
         self.time = 0.0
         self.position = Vector3.Create(-4.0, 1.5, -2.0) if self.is_player else Vector3.Create(4.0, 3.5, 2.0)
+
+    def gain_experience(self, amount):
+        if self.level >= 100:
+            return []
+            
+        logs = []
+        self.experience += amount
+        exp_needed = self.level * 100
+        
+        while self.experience >= exp_needed and self.level < 100:
+            self.experience -= exp_needed
+            self.level += 1
+            logs.append(f"{self.name} leveled up to Level {self.level}!")
+            
+            # Recalculate stats based on new level
+            old_max_hp = self.max_hp
+            self.max_hp = self.calculate_stat("hp")
+            # Increase current HP by the HP increase
+            hp_diff = self.max_hp - old_max_hp
+            self.hp = min(self.max_hp, self.hp + hp_diff)
+            
+            self.base_attack = self.calculate_stat("attack")
+            self.base_defense = self.calculate_stat("defense")
+            self.base_speed = self.calculate_stat("speed")
+            
+            # Check for new moves
+            new_moves = self.get_new_moves_for_level(self.level)
+            for mv in new_moves:
+                if mv not in [m.name for m in self.moves]:
+                    from battle_pals.models.move import MOVES
+                    move_obj = MOVES.get(mv)
+                    if move_obj:
+                        if len(self.moves) < 4:
+                            self.moves.append(move_obj)
+                            logs.append(f"{self.name} learned {mv}!")
+                        else:
+                            old_move = self.moves.pop(0)
+                            self.moves.append(move_obj)
+                            logs.append(f"{self.name} forgot {old_move.name} and learned {mv}!")
+                            
+            # Check for evolution
+            if self.species.evolves_into and self.species.evolution_level and self.level >= self.species.evolution_level:
+                from battle_pals.models.species import SPECIES
+                next_species = SPECIES.get(self.species.evolves_into)
+                if next_species:
+                    logs.append(f"What? {self.name} is evolving!")
+                    old_name = self.name
+                    self.species = next_species
+                    self.name = next_species.name
+                    self.types = next_species.types
+                    self.type = next_species.types[0] if next_species.types else "Normal"
+                    
+                    self.max_hp = self.calculate_stat("hp")
+                    self.hp = self.max_hp
+                    self.base_attack = self.calculate_stat("attack")
+                    self.base_defense = self.calculate_stat("defense")
+                    self.base_speed = self.calculate_stat("speed")
+                    logs.append(f"{old_name} evolved into {self.name}!")
+                    
+            exp_needed = self.level * 100
+            
+        return logs
+
+    def get_new_moves_for_level(self, lvl):
+        new_mvs = []
+        for learn in self.species.learnset:
+            if learn["level"] == lvl:
+                new_mvs.append(learn["move"])
+        return new_mvs
 
     def draw_3d(self, facing=1.0, scale=1.0):
         pos = self.position

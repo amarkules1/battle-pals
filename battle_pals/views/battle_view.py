@@ -11,12 +11,15 @@ from battle_pals.constants import (
     COLOR_TYPE_SHADOW
 )
 from battle_pals.views.game_over_view import GameOverView
+from battle_pals.models.state import GameState, PRECINCTS
 from ai4animation import AI4Animation, Vector3
 
 # Battle States
 STATE_INTRO = 0
 STATE_MOVE_SELECT = 1
 STATE_COMBAT_LOGS = 2
+STATE_CATCH_PHASE = 3
+STATE_CATCH_LOGS = 4
 
 class MoveButton:
     def __init__(self, move, lx, ty, w, h):
@@ -66,42 +69,49 @@ class MoveButton:
         )
 
 class BattleView:
-    def __init__(self, player_pal, opponent_pal):
-        self.player = player_pal
-        self.opponent = opponent_pal
+    def __init__(self, player_party, opponent_data, mode="WILD"):
+        self.state_mgr = GameState.get_instance()
+        self.mode = mode  # "WILD" or "BOSS"
         
-        # Reset modifiers
+        # 1. Player setup: Load active party list
+        self.player_party = player_party
+        self.player_idx = 0
+        while self.player_idx < len(self.player_party) and self.player_party[self.player_idx].hp <= 0:
+            self.player_idx += 1
+            
+        self.player = self.player_party[self.player_idx]
+        self.player.is_player = True
         self.player.reset_battle_stats()
+
+        # 2. Opponent setup: Load opponent list
+        if isinstance(opponent_data, list):
+            self.opponent_list = opponent_data
+        else:
+            self.opponent_list = [opponent_data]
+            
+        self.opponent_idx = 0
+        self.opponent = self.opponent_list[self.opponent_idx]
+        self.opponent.is_player = False
         self.opponent.reset_battle_stats()
 
         self.state = STATE_INTRO
         self.log_queue = []
         self.current_log = ""
-        
         self.move_buttons = []
-        self.turn_order = []  # Tracks actions in the current combat round
-        
-        # Timers
+        self.turn_order = []  
         self.blink_timer = 0.0
         self.show_arrow = True
-        
-        # Game Over trigger state
         self.game_ending = False
 
-    def on_show_view(self):
-        # Log introductory messages
-        self.log_queue = [
-            f"A wild {self.opponent.name} appeared!",
-            f"Go! {self.player.name}!"
-        ]
-        self.advance_log()
+        self.rebuild_move_buttons()
 
-        # Build Move Buttons
+    def rebuild_move_buttons(self):
+        self.move_buttons = []
         sw = rl.GetScreenWidth()
         sh = rl.GetScreenHeight()
         
-        btn_w = sw * 0.12 # ~230 pixels
-        btn_h = sh * 0.055 # ~60 pixels
+        btn_w = sw * 0.12 
+        btn_h = sh * 0.055 
         spacing_x = sw * 0.015
         spacing_y = sh * 0.015
         
@@ -115,6 +125,22 @@ class BattleView:
             by = start_y + row * (btn_h + spacing_y)
             self.move_buttons.append(MoveButton(move, bx, by, btn_w, btn_h))
 
+    def on_show_view(self):
+        # Intro Log setup
+        if self.mode == "BOSS":
+            bureaucrat = PRECINCTS[self.state_mgr.current_precinct]["bureaucrat"]
+            self.log_queue = [
+                f"{bureaucrat} challenged you to a battle!",
+                f"{bureaucrat} sent out {self.opponent.name}!",
+                f"Go! {self.player.name}!"
+            ]
+        else:
+            self.log_queue = [
+                f"A wild {self.opponent.name} appeared (Lv{self.opponent.level})!",
+                f"Go! {self.player.name}!"
+            ]
+        self.advance_log()
+
     def advance_log(self):
         """Advances to the next message in the log, checking for end-of-battle conditions."""
         if self.log_queue:
@@ -123,24 +149,91 @@ class BattleView:
         else:
             # Check for faint conditions
             if self.player.hp <= 0 or self.opponent.hp <= 0:
-                self.turn_order = []  # Clear pending attacks if battle ends
+                self.turn_order = []  
+                
+                # Active player Pal fainted
                 if self.player.hp <= 0 and not self.player.is_fainted:
                     self.player.faint_timer = 0.01
                     self.log_queue.append(f"{self.player.name} fainted!")
-                    self.game_ending = True
                     self.advance_log()
+                    
+                # Active opponent Pal fainted
                 elif self.opponent.hp <= 0 and not self.opponent.is_fainted:
                     self.opponent.faint_timer = 0.01
-                    self.log_queue.append(f"The wild {self.opponent.name} fainted!")
-                    self.game_ending = True
+                    self.log_queue.append(f"The opponent's {self.opponent.name} fainted!")
                     self.advance_log()
+                    
                 else:
-                    # Redirect to game over
-                    victory = self.opponent.hp <= 0
-                    from battle_pals.game import BattlePalsGame
-                    BattlePalsGame.get_instance().switch_to_view(
-                        GameOverView(victory=victory, player_pal=self.player, opponent_pal=self.opponent)
-                    )
+                    # Resolve replacement or battle end
+                    if self.player.hp <= 0:
+                        # Check for next player Pal
+                        next_idx = self.player_idx + 1
+                        while next_idx < len(self.player_party) and self.player_party[next_idx].hp <= 0:
+                            next_idx += 1
+                            
+                        if next_idx < len(self.player_party):
+                            self.player_idx = next_idx
+                            self.player = self.player_party[self.player_idx]
+                            self.player.is_player = True
+                            self.player.reset_battle_stats()
+                            self.rebuild_move_buttons()
+                            self.log_queue.append(f"Go! {self.player.name}!")
+                            self.advance_log()
+                        else:
+                            # Defeat
+                            self.game_ending = True
+                            from battle_pals.game import BattlePalsGame
+                            BattlePalsGame.get_instance().switch_to_view(
+                                GameOverView(victory=False, player_pal=self.player, opponent_pal=self.opponent)
+                            )
+                            
+                    elif self.opponent.hp <= 0:
+                        # Add to paldex
+                        self.state_mgr.add_to_paldex(self.opponent.name, "defeated")
+                        
+                        # Check for next opponent Pal (Boss mode)
+                        next_idx = self.opponent_idx + 1
+                        if next_idx < len(self.opponent_list):
+                            self.opponent_idx = next_idx
+                            self.opponent = self.opponent_list[self.opponent_idx]
+                            self.opponent.is_player = False
+                            self.opponent.reset_battle_stats()
+                            
+                            bureaucrat = PRECINCTS[self.state_mgr.current_precinct]["bureaucrat"] if self.mode == "BOSS" else "Opponent"
+                            self.log_queue.append(f"{bureaucrat} sent out {self.opponent.name}!")
+                            self.advance_log()
+                        else:
+                            # Victory - Award EXP & RP
+                            self.game_ending = True
+                            
+                            # Calculate total EXP award
+                            tot_level = sum(opp.level for opp in self.opponent_list)
+                            exp_gained = max(10, tot_level * 15)
+                            rp_gained = max(20, tot_level * 10)
+                            
+                            self.state_mgr.gain_research_points(rp_gained)
+                            self.log_queue.append(f"Victory! Gained {rp_gained} Research Points (RP)!")
+                            
+                            # Award to current active Pal
+                            self.log_queue.append(f"{self.player.name} gained {exp_gained} EXP!")
+                            level_logs = self.player.gain_experience(exp_gained)
+                            self.log_queue.extend(level_logs)
+                            
+                            if self.mode == "WILD":
+                                # Catch Phase
+                                self.state = STATE_CATCH_PHASE
+                            else:
+                                # Boss Beat - Update state gates
+                                self.state_mgr.defeated_bureaucrats.append(self.state_mgr.current_precinct)
+                                next_precinct_idx = self.state_mgr.current_precinct + 1
+                                if next_precinct_idx < 9 and next_precinct_idx not in self.state_mgr.unlocked_precincts:
+                                    self.state_mgr.unlocked_precincts.append(next_precinct_idx)
+                                
+                                from battle_pals.game import BattlePalsGame
+                                BattlePalsGame.get_instance().switch_to_view(
+                                    GameOverView(victory=True, player_pal=self.player, opponent_pal=self.opponent)
+                                )
+                                
             elif self.turn_order:
                 # Process the second attacker's turn
                 attacker, move, defender = self.turn_order.pop(0)
@@ -149,7 +242,6 @@ class BattleView:
                     self.log_queue.extend(logs)
                     self.advance_log()
                 else:
-                    # Attacker fainted during the first turn, proceed to check end of round
                     self.advance_log()
             else:
                 # Return to move selection
@@ -159,11 +251,8 @@ class BattleView:
     def execute_turn(self, player_move):
         """Computes combat turns using Speeds to determine priority."""
         self.log_queue = []
-        
-        # Simple AI Move Selection
         opponent_move = random.choice(self.opponent.moves)
 
-        # Check Speeds
         player_first = self.player.speed >= self.opponent.speed
         
         if player_first:
@@ -184,17 +273,15 @@ class BattleView:
         self.advance_log()
 
     def on_update(self, dt):
-        # Blinking cursor for dialogue
         self.blink_timer += dt
         if self.blink_timer >= 0.5:
             self.blink_timer = 0.0
             self.show_arrow = not self.show_arrow
 
-        # Update Pal animations
+        # Update animations
         self.player.update_animation(dt)
         self.opponent.update_animation(dt)
 
-        # Check hover states & clicks
         mouse_pos = rl.GetMousePosition()
         mx, my = mouse_pos.x, mouse_pos.y
 
@@ -202,15 +289,74 @@ class BattleView:
             for btn in self.move_buttons:
                 btn.check_mouse(mx, my)
 
-        # Handle click event
+        # Handle clicks
         if rl.IsMouseButtonPressed(rl.MOUSE_BUTTON_LEFT):
             if self.state == STATE_COMBAT_LOGS or self.state == STATE_INTRO:
                 self.advance_log()
+            elif self.state == STATE_CATCH_LOGS:
+                # Transition to Game Over (Victory) after catching screen
+                from battle_pals.game import BattlePalsGame
+                BattlePalsGame.get_instance().switch_to_view(
+                    GameOverView(victory=True, player_pal=self.player, opponent_pal=self.opponent)
+                )
             elif self.state == STATE_MOVE_SELECT:
                 for btn in self.move_buttons:
                     if btn.hovered:
                         self.execute_turn(btn.move)
                         break
+            elif self.state == STATE_CATCH_PHASE:
+                # Button positions inside dialogue panel
+                sw = rl.GetScreenWidth()
+                sh = rl.GetScreenHeight()
+                panel_w = sw * 0.90
+                panel_h = sh * 0.22
+                panel_x = (sw - panel_w) / 2
+                panel_y = sh * 0.74
+                
+                cw = 180
+                ch = 45
+                by = panel_y + panel_h * 0.45
+                start_bx = panel_x + 80
+                
+                # Check Basic Cube button (x = start_bx)
+                if check_rect_collision(mx, my, start_bx, by, cw, ch):
+                    self.throw_capture_cube("Basic Cube", 1.0)
+                # Check Mega Cube button (x = start_bx + 220)
+                elif check_rect_collision(mx, my, start_bx + 220, by, cw, ch):
+                    self.throw_capture_cube("Mega Cube", 1.8)
+                # Check Ultra Cube button (x = start_bx + 440)
+                elif check_rect_collision(mx, my, start_bx + 440, by, cw, ch):
+                    self.throw_capture_cube("Ultra Cube", 2.8)
+                # Check Flee button (x = start_bx + 660)
+                elif check_rect_collision(mx, my, start_bx + 660, by, cw, ch):
+                    self.log_queue.append(f"You left the wild {self.opponent.name} behind.")
+                    self.state = STATE_CATCH_LOGS
+                    self.advance_log()
+
+    def throw_capture_cube(self, cube_name, multiplier):
+        if self.state_mgr.inventory[cube_name] <= 0:
+            return
+            
+        self.state_mgr.inventory[cube_name] -= 1
+        
+        # Calculate capture rate (wild Pal is fainted, giving high capture rate)
+        base_rate = 0.50
+        catch_chance = base_rate * multiplier
+        
+        self.log_queue = [f"Threw a {cube_name}! (Inventory: {self.state_mgr.inventory[cube_name]})"]
+        
+        roll = random.random()
+        if roll <= catch_chance:
+            self.log_queue.append("One... Two... Three... Click!")
+            # Add to party or box
+            added_loc = self.state_mgr.add_pal_to_party_or_box(self.opponent)
+            self.state_mgr.add_to_paldex(self.opponent.name, "captured")
+            self.log_queue.append(f"Captured wild {self.opponent.name}! Transferred to {added_loc}!")
+        else:
+            self.log_queue.append("Oh no! The wild Pal broke free and fled!")
+            
+        self.state = STATE_CATCH_LOGS
+        self.advance_log()
 
     def draw_pal_3d(self, pal):
         if pal.is_fainted:
@@ -222,15 +368,14 @@ class BattleView:
         pal.draw_3d(facing, scale)
 
     def on_draw(self):
-        # Draw battle platform
-        # Dark forest green arena circle floor
-        rl.DrawPlane([0.0, 0.0, 0.0], [30.0, 30.0], (28, 36, 24, 255))
+        # Draw platform ground
+        rl.DrawPlane([0.0, 0.0, 0.0], [30.0, 30.0], (25, 30, 42, 255))
         
         # Player platform
-        rl.DrawPlane([-4.0, 0.02, -2.0], [4.5, 4.5], (56, 68, 88, 255))
+        rl.DrawPlane([-4.0, 0.02, -2.0], [4.5, 4.5], (45, 55, 75, 255))
         
         # Opponent platform
-        rl.DrawPlane([4.0, 0.02, 2.0], [4.5, 4.5], (56, 68, 88, 255))
+        rl.DrawPlane([4.0, 0.02, 2.0], [4.5, 4.5], (45, 55, 75, 255))
 
         # Render Pals
         self.draw_pal_3d(self.player)
@@ -240,12 +385,15 @@ class BattleView:
         sw = rl.GetScreenWidth()
         sh = rl.GetScreenHeight()
 
-        # Draw HUD Box details
         # Opponent HUD (Top Left)
-        self.draw_hud_box(sw * 0.06, sh * 0.08, sw * 0.28, sh * 0.12, self.opponent)
+        opp_hud_txt = f"{self.opponent.name} (Lv{self.opponent.level})"
+        if self.mode == "BOSS":
+            opp_hud_txt += f" [{self.opponent_idx+1}/{len(self.opponent_list)}]"
+        self.draw_hud_box(sw * 0.06, sh * 0.08, sw * 0.28, sh * 0.12, self.opponent, header_override=opp_hud_txt)
         
         # Player HUD (Bottom Right)
-        self.draw_hud_box(sw * 0.66, sh * 0.60, sw * 0.28, sh * 0.12, self.player, show_numbers=True)
+        player_hud_txt = f"{self.player.name} (Lv{self.player.level}) [{self.player_idx+1}/{len(self.player_party)}]"
+        self.draw_hud_box(sw * 0.66, sh * 0.60, sw * 0.28, sh * 0.12, self.player, header_override=player_hud_txt, show_numbers=True)
 
         # Draw Dialogue Console Box (Bottom Panel)
         panel_w = sw * 0.90
@@ -256,14 +404,13 @@ class BattleView:
         rl.DrawRectangle(int(panel_x), int(panel_y), int(panel_w), int(panel_h), COLOR_BG_PANEL)
         rl.DrawRectangleLinesEx([panel_x, panel_y, panel_w, panel_h], 3, COLOR_BORDER)
 
-        if self.state == STATE_COMBAT_LOGS or self.state == STATE_INTRO:
+        if self.state in [STATE_COMBAT_LOGS, STATE_INTRO, STATE_CATCH_LOGS]:
             # Draw Dialogue Text
-            # We want to display current_log
             AI4Animation.Draw.Text(
                 self.current_log,
                 (panel_x + sw * 0.03) / sw,
                 (panel_y + sh * 0.04) / sh,
-                0.028, COLOR_TEXT_PRIMARY, 0.0
+                0.026, COLOR_TEXT_PRIMARY, 0.0
             )
             # Arrow indicator
             if self.show_arrow:
@@ -290,7 +437,6 @@ class BattleView:
                 
                 details_x = (divider_x + sw * 0.02) / sw
                 
-                # Move details
                 AI4Animation.Draw.Text(
                     f"Type: {move.type}",
                     details_x, (panel_y + sh * 0.03) / sh,
@@ -307,7 +453,50 @@ class BattleView:
                     0.016, COLOR_TEXT_PRIMARY, 0.0
                 )
 
-    def draw_hud_box(self, lx, ty, w, h, pal, show_numbers=False):
+        elif self.state == STATE_CATCH_PHASE:
+            # Render Cube Capture Buttons
+            AI4Animation.Draw.Text(
+                "Wild Pal defeated! Throw a Capture Cube?",
+                (panel_x + sw * 0.03) / sw,
+                (panel_y + sh * 0.02) / sh,
+                0.018, COLOR_TEXT_MUTED, 0.0
+            )
+            
+            cw = 180
+            ch = 45
+            by = panel_y + panel_h * 0.45
+            start_bx = panel_x + 80
+            
+            # Check Cube mouse positions for button hover styling
+            mx, my = rl.GetMousePosition().x, rl.GetMousePosition().y
+            
+            cubes = [
+                ("Basic Cube", start_bx, COLOR_TYPE_GRASS),
+                ("Mega Cube", start_bx + 220, COLOR_TYPE_WATER),
+                ("Ultra Cube", start_bx + 440, COLOR_TYPE_FIRE),
+                ("Leave Pal", start_bx + 660, COLOR_BORDER)
+            ]
+            
+            for c_name, bx, color in cubes:
+                is_hover = check_rect_collision(mx, my, bx, by, cw, ch)
+                
+                qty = ""
+                enabled = True
+                if c_name != "Leave Pal":
+                    count = self.state_mgr.inventory[c_name]
+                    qty = f" (x{count})"
+                    if count <= 0:
+                        enabled = False
+                        
+                bg_col = (45, 55, 75, 255) if is_hover and enabled else COLOR_BG_DARK
+                border_col = color if is_hover and enabled else COLOR_BORDER
+                text_col = COLOR_TEXT_PRIMARY if enabled else COLOR_TEXT_MUTED
+                
+                rl.DrawRectangle(int(bx), int(by), cw, ch, bg_col)
+                rl.DrawRectangleLinesEx([bx, by, cw, ch], 2 if is_hover and enabled else 1, border_col)
+                AI4Animation.Draw.Text(f"{c_name}{qty}", (bx + cw // 2) / sw, (by + 14) / sh, 0.016, text_col, 0.5)
+
+    def draw_hud_box(self, lx, ty, w, h, pal, header_override=None, show_numbers=False):
         # Draw background and border
         rl.DrawRectangle(int(lx), int(ty), int(w), int(h), COLOR_BG_PANEL)
         rl.DrawRectangleLinesEx([lx, ty, w, h], 2, COLOR_BORDER)
@@ -315,20 +504,13 @@ class BattleView:
         sw = rl.GetScreenWidth()
         sh = rl.GetScreenHeight()
 
-        # Pal Name
+        # Header Text (Name and level info)
+        title_txt = header_override if header_override else f"{pal.name} (Lv{pal.level})"
         AI4Animation.Draw.Text(
-            pal.name,
+            title_txt,
             (lx + w * 0.05) / sw,
             (ty + h * 0.15) / sh,
             0.022, COLOR_TEXT_PRIMARY, 0.0
-        )
-        
-        # Pal Level
-        AI4Animation.Draw.Text(
-            f"Lv{pal.level}",
-            (lx + w * 0.95) / sw,
-            (ty + h * 0.15) / sh,
-            0.018, COLOR_TEXT_MUTED, 1.0
         )
 
         # HP Bar geometry
@@ -341,7 +523,7 @@ class BattleView:
         rl.DrawRectangle(int(bar_x), int(bar_y), int(bar_w), int(bar_h), COLOR_HP_BG)
         
         # Calculate HP Fill
-        hp_percent = pal.hp / pal.max_hp
+        hp_percent = max(0.0, pal.hp / pal.max_hp)
         if hp_percent > 0.5:
             hp_color = COLOR_HP_GREEN
         elif hp_percent > 0.2:

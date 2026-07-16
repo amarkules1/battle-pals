@@ -29,9 +29,9 @@ class BattlePalsGame:
             rl_cam.target = [0.0, 2.0, 0.0]
             rl_cam.up = [0.0, 1.0, 0.0]
 
-        # Start with the starter selection screen
-        from battle_pals.views.starter_view import StarterView
-        self.switch_to_view(StarterView())
+        # Start with the Character Creator view
+        from battle_pals.views.char_creator_view import CharCreatorView
+        self.switch_to_view(CharCreatorView())
 
     def switch_to_view(self, view):
         self.active_view = view

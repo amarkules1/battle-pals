@@ -35,14 +35,19 @@ class GameOverView:
 
         # Handle mouse press
         if rl.IsMouseButtonPressed(rl.MOUSE_BUTTON_LEFT) and self.btn_hovered:
-            from battle_pals.views.starter_view import StarterView
+            from battle_pals.models.state import GameState
+            state = GameState.get_instance()
+            if not self.victory:
+                state.heal_all_pals()
+                
+            from battle_pals.views.exploration_view import ExplorationView
             from battle_pals.game import BattlePalsGame
-            BattlePalsGame.get_instance().switch_to_view(StarterView())
+            BattlePalsGame.get_instance().switch_to_view(ExplorationView())
 
     def on_draw(self):
         # Draw background arena floor
         # Dark forest green arena plane
-        rl.DrawPlane([0.0, 0.0, 0.0], [30.0, 30.0], (28, 36, 24, 255))
+        rl.DrawPlane([0.0, 0.0, 0.0], [30.0, 30.0], (25, 30, 42, 255))
 
     def on_gui(self):
         sw = rl.GetScreenWidth()
@@ -60,16 +65,16 @@ class GameOverView:
 
         # Summary text
         if self.victory:
-            summary = f"Your {self.player.name} defeated the wild {self.opponent.name}!"
+            summary = f"Congratulations! You won the battle!"
         else:
-            summary = f"Your {self.player.name} fainted in battle against {self.opponent.name}."
+            summary = "Your active team fainted. Retreated safely back to the Precinct Lab."
 
         AI4Animation.Draw.Text(
             summary,
             0.5, 0.35, 0.022, COLOR_TEXT_PRIMARY, 0.5
         )
 
-        # Drawing the "Play Again" button
+        # Drawing the "RETURN TO PRECINCT" button
         bg_color = (45, 52, 68, 255) if self.btn_hovered else COLOR_BG_PANEL
         border_color = (46, 204, 113, 255) if self.btn_hovered else COLOR_BORDER
         border_thickness = 4 if self.btn_hovered else 2
@@ -81,7 +86,7 @@ class GameOverView:
         btn_cy_norm = (self.btn_y + self.btn_h / 2 - 12) / sh
 
         AI4Animation.Draw.Text(
-            "PLAY AGAIN",
+            "RETURN TO PRECINCT",
             btn_cx_norm, btn_cy_norm,
-            0.024, COLOR_TEXT_PRIMARY, 0.5
+            0.02, COLOR_TEXT_PRIMARY, 0.5
         )
